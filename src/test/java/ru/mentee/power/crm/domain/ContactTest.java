@@ -1,0 +1,30 @@
+package ru.mentee.power.crm.domain;
+
+import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.*;
+
+class ContactTest {
+
+  @Test
+  void shouldCreateContactWhenValidData() {
+    Contact contact = new Contact("Alex", "Petrov", "alex@gmail.com");
+    assertThat(contact.getFirstName()).isEqualTo("Alex");
+    assertThat(contact.getLastName()).isEqualTo("Petrov");
+    assertThat(contact.getEmail()).isEqualTo("alex@gmail.com");
+  }
+
+  @Test
+  void shouldBeEqualWhenSameData() {
+    Contact contact = new Contact("Alex", "Petrov", "alex@gmail.com");
+    Contact contact2 = new Contact("Alex", "Petrov", "alex@gmail.com");
+    assertThat(contact.equals(contact2)).isTrue();
+    assertThat(contact.hashCode()).isEqualTo(contact2.hashCode());
+  }
+
+  @Test
+  void shouldNotBeEqualWhenDifferentData() {
+    Contact contact = new Contact("Alex", "Petrov", "alex@gmail.com");
+    Contact contact2 = new Contact("Elena", "Kiseleva", "elena@gmail.com");
+    assertThat(contact).isNotEqualTo(contact2);
+  }
+}
