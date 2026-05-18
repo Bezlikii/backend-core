@@ -3,6 +3,8 @@ package ru.mentee.power.crm.domain;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.UUID;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 class LeadTest {
@@ -10,13 +12,13 @@ class LeadTest {
 
   @BeforeEach
   void setUp() {
-    lead = new Lead("L1", "test@example.com", "+71234567890", "TestCorp", "NEW");
+    lead = new Lead(UUID.randomUUID(), "test@example.com", "+71234567890", "TestCorp", "NEW");
   }
 
   @Test
   void shouldReturnWhenGetIdCalled() {
-    String id = lead.getId();
-    assertThat(id).isEqualTo("L1");
+    UUID id = lead.getId();
+    assertThat(id).isNotNull();
   }
 
   @Test
@@ -53,5 +55,22 @@ class LeadTest {
         ", company='" + lead.getCompany() + '\'' +
         ", status='" + lead.getStatus() + '\'' +
         '}');
+  }
+
+  @Test
+  void shouldCreateLeadWhenValidData() {
+    UUID id = UUID.randomUUID();
+    Lead lead1 = new Lead(id, "test@gmail.com", "+7000000000", "Company", "NEW");
+    assertThat(lead1.getId()).isEqualTo(id);
+
+  }
+
+  @Test
+  void shouldGenerateUniqueIdsWhenMultipleLeads() {
+    UUID id1 = UUID.randomUUID();
+    UUID id2 = UUID.randomUUID();
+    Lead lead1 = new Lead(id1, "test@gmail.com", "+7000000000", "Company", "NEW");
+    Lead lead2 = new Lead(id2, "othertest@gmail.com", "+8000000000", "Company2", "NEW");
+    assertThat(lead1.getId()).isNotEqualTo(lead2.getId());
   }
 }

@@ -11,6 +11,7 @@ ext {
     junitVersion = '5.11.0'
     junitPlatformVersion = '1.11.0'
     assertjVersion = '3.27.3'
+    lombokVersion = '1.18.40'
 }
 
 java {
@@ -27,6 +28,8 @@ dependencies {
     testImplementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
     testImplementation "org.assertj:assertj-core:${assertjVersion}"
     testRuntimeOnly "org.junit.platform:junit-platform-launcher:${junitPlatformVersion}"
+    compileOnly "org.projectlombok:lombok:${lombokVersion}"
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
 }
 
 checkstyle {
