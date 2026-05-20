@@ -3,29 +3,62 @@ package ru.mentee.power.crm.domain;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class ContactTest {
 
   @Test
   void shouldCreateContactWhenValidData() {
-    Contact contact = new Contact("Alex", "Petrov", "alex@gmail.com");
-    assertThat(contact.firstName()).isEqualTo("Alex");
-    assertThat(contact.lastName()).isEqualTo("Petrov");
-    assertThat(contact.email()).isEqualTo("alex@gmail.com");
+    Address address = new Address("Moscow", "Izmailovskaya", "675438");
+    Contact contact = new Contact("alex@gmail.com", "+78754673456", address);
+    assertThat(contact.address()).isEqualTo(address);
+    assertThat(contact.address().city()).isEqualTo("Moscow");
   }
 
   @Test
-  void shouldBeEqualWhenSameData() {
-    Contact contact = new Contact("Alex", "Petrov", "alex@gmail.com");
-    Contact contact2 = new Contact("Alex", "Petrov", "alex@gmail.com");
-    assertThat(contact.equals(contact2)).isTrue();
-    assertThat(contact.hashCode()).isEqualTo(contact2.hashCode());
+  void shouldDelegateToAddressWhenAccessingCity() {
+    Address address = new Address("Moscow", "Izmailovskaya", "675438");
+    Contact contact = new Contact("alex@gmail.com", "+78754673456", address);
+    assertThat(contact.address().city()).isEqualTo("Moscow");
+    assertThat(contact.address().street()).isEqualTo("Izmailovskaya");
   }
 
   @Test
-  void shouldNotBeEqualWhenDifferentData() {
-    Contact contact = new Contact("Alex", "Petrov", "alex@gmail.com");
-    Contact contact2 = new Contact("Elena", "Kiseleva", "elena@gmail.com");
-    assertThat(contact).isNotEqualTo(contact2);
+  void shouldThrowExceptionWhenAddressIsNull() {
+    assertThatThrownBy(() -> new Contact("alex@gmail.com", "+78754673456", null))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessageContaining("Address");
+  }
+
+  @Test
+  void shouldThrowExceptionWhenEmailIsNull() {
+    Address address = new Address("Moscow", "Lenina", "111111");
+    assertThatThrownBy(() -> new Contact(null, "+78754673456", address))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessageContaining("Email");
+  }
+
+  @Test
+  void shouldThrowExceptionWhenPhoneIsNull() {
+    Address address = new Address("Moscow", "Lenina", "111111");
+    assertThatThrownBy(() -> new Contact("alex@gmail.com", null, address))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessageContaining("Phone");
+  }
+
+  @Test
+  void shouldThrowExceptionWhenEmailIsBlank() {
+    Address address = new Address("Moscow", "Lenina", "111111");
+    assertThatThrownBy(() -> new Contact("   ", "+78754673456", address))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessageContaining("Email");
+  }
+
+  @Test
+  void shouldThrowExceptionWhenPhoneIsBlank() {
+    Address address = new Address("Moscow", "Lenina", "111111");
+    assertThatThrownBy(() -> new Contact("alex@gmail.com", "   ", address))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessageContaining("Phone");
   }
 }
