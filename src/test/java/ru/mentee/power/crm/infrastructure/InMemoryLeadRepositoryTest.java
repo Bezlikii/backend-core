@@ -26,7 +26,6 @@ class InMemoryLeadRepositoryTest {
     return new Lead(id, createContact(email, phone), company, status);
   }
 
-
   @Test
   void shouldAddLeadWhenLeadIsUnique() {
     InMemoryLeadRepository repository = new InMemoryLeadRepository();
