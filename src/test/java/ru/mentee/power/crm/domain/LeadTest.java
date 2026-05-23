@@ -61,7 +61,6 @@ class LeadTest {
     assertThatThrownBy(() -> new Lead(UUID.randomUUID(), contact, "TestCompany", "ERROR"))
         .isInstanceOf(IllegalArgumentException.class)
         .hasMessageContaining("Invalid");
-
   }
 
   @Test
