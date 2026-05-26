@@ -1,4 +1,4 @@
-package ru.mentee.power.crm.storage;
+package ru.mentee.power.crm.educational.storage;
 
 import ru.mentee.power.crm.domain.Lead;
 

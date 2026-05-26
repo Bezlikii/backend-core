@@ -1,4 +1,4 @@
-package ru.mentee.power.crm.core;
+package ru.mentee.power.crm.educational.core;
 
 import ru.mentee.power.crm.domain.Lead;
 

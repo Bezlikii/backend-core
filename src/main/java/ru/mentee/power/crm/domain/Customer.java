@@ -2,7 +2,7 @@ package ru.mentee.power.crm.domain;
 
 import java.util.UUID;
 
-public record Customer(UUID id, Contact contact, Address billingAddress, String loyaltyTier) {
+public record Customer(UUID id, Contact contact, Address billingAddress, LoyaltyTier loyaltyTier) {
   public Customer {
     if (id == null) {
       throw new IllegalArgumentException("Id не должен быть null");
@@ -13,8 +13,8 @@ public record Customer(UUID id, Contact contact, Address billingAddress, String 
     if (billingAddress == null) {
       throw new IllegalArgumentException("Address не должен быть null");
     }
-    if (!loyaltyTier.equals("BRONZE") && !loyaltyTier.equals("SILVER") && !loyaltyTier.equals("GOLD")) {
-      throw new IllegalArgumentException("Не верный loyaltyTier: " + loyaltyTier);
+    if (loyaltyTier == null) {
+      throw new IllegalArgumentException("LoyaltyTier не может быть null");
     }
   }
 }

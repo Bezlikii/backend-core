@@ -5,8 +5,13 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface Repository<T> {
-  void add(T entity);
-  void remove(UUID id);
+  T save(T entity);
+
+  void delete(UUID id);
+
   Optional<T> findById(UUID id);
+
+  Optional<T> findByEmail(String email);
+
   List<T> findAll();
 }
