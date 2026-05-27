@@ -1,10 +1,11 @@
-package ru.mentee.power.crm.core;
+package ru.mentee.power.crm.educational.core;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.mentee.power.crm.domain.Address;
 import ru.mentee.power.crm.domain.Contact;
 import ru.mentee.power.crm.domain.Lead;
+import ru.mentee.power.crm.domain.LeadStatus;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -20,7 +21,7 @@ class LeadRepositoryTest {
   private Lead createLead(UUID id) {
     Address address = new Address("Moscow", "Izmailovskaya", "876354");
     Contact contact = new Contact("test@gmail.com", "+76584936574", address);
-    return new Lead(id, contact, "TestCompany", "NEW");
+    return new Lead(id, contact, "TestCompany", LeadStatus.NEW);
   }
 
   @Test

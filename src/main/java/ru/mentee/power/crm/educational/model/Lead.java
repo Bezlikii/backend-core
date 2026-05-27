@@ -1,4 +1,4 @@
-package ru.mentee.power.crm.model;
+package ru.mentee.power.crm.educational.model;
 
 public record Lead(
     String id,
