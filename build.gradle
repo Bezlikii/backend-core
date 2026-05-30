@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'checkstyle'
     id 'jacoco'
+    id 'application'
 }
 
 group = 'ru.mentee.power'
@@ -80,4 +81,8 @@ jacocoTestCoverageVerification {
 
 check {
     dependsOn jacocoTestCoverageVerification
+}
+
+application {
+    mainClass = 'ru.mentee.power.crm.web.Main'
 }
