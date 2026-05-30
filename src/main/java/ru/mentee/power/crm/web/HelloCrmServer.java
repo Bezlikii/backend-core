@@ -22,7 +22,7 @@ public class HelloCrmServer {
   public void start() {
     server.createContext("/hello", new HelloHandler());
     server.start();
-      System.out.println("Server started on http://localhost:" + server.getAddress().getPort());
+    System.out.println("Server started on http://localhost:" + server.getAddress().getPort());
   }
 
   public void stop() {
