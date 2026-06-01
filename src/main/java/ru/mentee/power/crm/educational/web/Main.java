@@ -1,4 +1,4 @@
-package ru.mentee.power.crm.web;
+package ru.mentee.power.crm.educational.web;
 
 public class Main {
   public static void main(String[] args) throws Exception {

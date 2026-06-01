@@ -1,16 +1,16 @@
 package ru.mentee.power.crm.infrastructure;
 
-import org.junit.jupiter.api.Test;
-import ru.mentee.power.crm.domain.Address;
-import ru.mentee.power.crm.domain.Contact;
-import ru.mentee.power.crm.domain.Lead;
-import ru.mentee.power.crm.domain.LeadStatus;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.Test;
+import ru.mentee.power.crm.domain.Address;
+import ru.mentee.power.crm.domain.Contact;
+import ru.mentee.power.crm.domain.Lead;
+import ru.mentee.power.crm.domain.LeadStatus;
 
 class InMemoryLeadRepositoryTest {
 
@@ -79,7 +79,8 @@ class InMemoryLeadRepositoryTest {
     UUID id2 = UUID.randomUUID();
     UUID id3 = UUID.randomUUID();
     Lead lead1 = createLead(id1, "test@gmail.com", "+79256743845", "TestCompany", LeadStatus.NEW);
-    Lead lead2 = createLead(id2, "test2@gmail.com", "+79567845656", "Test2Company", LeadStatus.QUALIFIED);
+    Lead lead2 = createLead(
+        id2, "test2@gmail.com", "+79567845656", "Test2Company", LeadStatus.QUALIFIED);
     Lead lead3 = createLead(id3, "test3@gmail.com", "+76453896453", "TestCompany", LeadStatus.NEW);
     repository.save(lead1);
     repository.save(lead2);
@@ -105,7 +106,8 @@ class InMemoryLeadRepositoryTest {
     UUID id2 = UUID.randomUUID();
     UUID id3 = UUID.randomUUID();
     Lead lead1 = createLead(id1, "test@gmail.com", "+79256743845", "TestCompany", LeadStatus.NEW);
-    Lead lead2 = createLead(id2, "test2@gmail.com", "+79567845656", "Test2Company", LeadStatus.QUALIFIED);
+    Lead lead2 = createLead(
+        id2, "test2@gmail.com", "+79567845656", "Test2Company", LeadStatus.QUALIFIED);
     Lead lead3 = createLead(id3, "test3@gmail.com", "+76453896453", "TestCompany", LeadStatus.NEW);
     repository.save(lead1);
     repository.save(lead2);
@@ -137,7 +139,8 @@ class InMemoryLeadRepositoryTest {
   @Test
   void shouldFindByEmailWhenEmailExists() {
     InMemoryLeadRepository repository = new InMemoryLeadRepository();
-    Lead lead = createLead(UUID.randomUUID(), "test@gmail.com", "+79256743845", "TestCompany", LeadStatus.NEW);
+    Lead lead = createLead(
+        UUID.randomUUID(), "test@gmail.com", "+79256743845", "TestCompany", LeadStatus.NEW);
     repository.save(lead);
 
     Optional<Lead> result = repository.findByEmail("test@gmail.com");
@@ -149,7 +152,8 @@ class InMemoryLeadRepositoryTest {
   @Test
   void shouldReturnEmptyWhenFindByEmailNotFound() {
     InMemoryLeadRepository repository = new InMemoryLeadRepository();
-    Lead lead = createLead(UUID.randomUUID(), "test@gmail.com", "+79256743845", "TestCompany", LeadStatus.NEW);
+    Lead lead = createLead(
+        UUID.randomUUID(), "test@gmail.com", "+79256743845", "TestCompany", LeadStatus.NEW);
     repository.save(lead);
 
     Optional<Lead> result = repository.findByEmail("nonexistent@gmail.com");
@@ -160,8 +164,10 @@ class InMemoryLeadRepositoryTest {
   @Test
   void shouldHandleDuplicateEmailsWithDifferentIds() {
     InMemoryLeadRepository repository = new InMemoryLeadRepository();
-    Lead lead1 = createLead(UUID.randomUUID(), "test@gmail.com", "+79256743845", "TestCompany", LeadStatus.NEW);
-    Lead lead2 = createLead(UUID.randomUUID(), "test@gmail.com", "+79256743845", "OtherCompany", LeadStatus.QUALIFIED);
+    Lead lead1 = createLead(
+        UUID.randomUUID(), "test@gmail.com", "+79256743845", "TestCompany", LeadStatus.NEW);
+    Lead lead2 = createLead(
+        UUID.randomUUID(), "test@gmail.com", "+79256743845", "OtherCompany", LeadStatus.QUALIFIED);
     repository.save(lead1);
     repository.save(lead2);
 

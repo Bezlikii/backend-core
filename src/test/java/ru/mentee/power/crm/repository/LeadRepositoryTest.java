@@ -1,18 +1,18 @@
 package ru.mentee.power.crm.repository;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import ru.mentee.power.crm.domain.Address;
-import ru.mentee.power.crm.domain.Contact;
-import ru.mentee.power.crm.domain.Lead;
-import ru.mentee.power.crm.domain.LeadStatus;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import ru.mentee.power.crm.domain.Address;
+import ru.mentee.power.crm.domain.Contact;
+import ru.mentee.power.crm.domain.Lead;
+import ru.mentee.power.crm.domain.LeadStatus;
 
 class LeadRepositoryTest {
   private LeadRepository repository;
@@ -124,7 +124,8 @@ class LeadRepositoryTest {
     Contact sharedContact = new Contact("ivan@mail.ru", "+79001234567",
         new Address("Moscow", "Tverskaya 1", "101000"));
     Lead originalLead = new Lead(UUID.randomUUID(), sharedContact, "Acme Corp", LeadStatus.NEW);
-    Lead duplicateLead = new Lead(UUID.randomUUID(), sharedContact, "TechCorp", LeadStatus.QUALIFIED);
+    Lead duplicateLead = new Lead(
+        UUID.randomUUID(), sharedContact, "TechCorp", LeadStatus.QUALIFIED);
 
     repository.save(originalLead);
     repository.save(duplicateLead);
