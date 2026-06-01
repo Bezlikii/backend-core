@@ -1,12 +1,12 @@
 package ru.mentee.power.crm.domain;
 
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.Test;
 
 class LeadEqualsHashCodeTest {
 
@@ -24,7 +24,8 @@ class LeadEqualsHashCodeTest {
 
   @Test
   void shouldBeReflexiveWhenEqualsCalledOnSameObject() {
-    Lead lead = createLead(UUID.randomUUID(), "test@gmail.com", "+76584936574", "TestCompany", LeadStatus.NEW);
+    Lead lead = createLead(
+        UUID.randomUUID(), "test@gmail.com", "+76584936574", "TestCompany", LeadStatus.NEW);
 
     assertThat(lead).isEqualTo(lead);
   }
@@ -100,15 +101,18 @@ class LeadEqualsHashCodeTest {
 
   @Test
   void shouldNotBeEqualWhenIdsAreDifferent() {
-    Lead firstLead = createLead(UUID.randomUUID(), "ivan@mail.ru", "+7123", "TechCorp", LeadStatus.NEW);
-    Lead differentLead = createLead(UUID.randomUUID(), "ivan@mail.ru", "+7123", "TechCorp", LeadStatus.NEW);
+    Lead firstLead = createLead(
+        UUID.randomUUID(), "ivan@mail.ru", "+7123", "TechCorp", LeadStatus.NEW);
+    Lead differentLead = createLead(
+        UUID.randomUUID(), "ivan@mail.ru", "+7123", "TechCorp", LeadStatus.NEW);
 
     assertThat(firstLead).isNotEqualTo(differentLead);
   }
 
   @Test
   void shouldReturnFalseWhenComparedWithDifferentClass() {
-    Lead lead = createLead(UUID.randomUUID(), "ivan@mail.ru", "+7123", "TechCorp", LeadStatus.NEW);
+    Lead lead = createLead(
+        UUID.randomUUID(), "ivan@mail.ru", "+7123", "TechCorp", LeadStatus.NEW);
     assertThat(lead.equals("Not a Lead")).isFalse();
   }
 }

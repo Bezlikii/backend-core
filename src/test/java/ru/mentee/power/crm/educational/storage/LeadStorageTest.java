@@ -1,15 +1,15 @@
 package ru.mentee.power.crm.educational.storage;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+import java.util.UUID;
+
 import org.junit.jupiter.api.Test;
 import ru.mentee.power.crm.domain.Address;
 import ru.mentee.power.crm.domain.Contact;
 import ru.mentee.power.crm.domain.Lead;
 import ru.mentee.power.crm.domain.LeadStatus;
-
-import java.util.UUID;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class LeadStorageTest {
 
@@ -28,7 +28,8 @@ class LeadStorageTest {
   @Test
   void shouldAddLeadWhenLeadIsUnique() {
     LeadStorage storage = new LeadStorage();
-    Lead uniqueLead = createLead(UUID.randomUUID(), "ivan@mail.ru", "+7123", "TechCorp", LeadStatus.NEW);
+    Lead uniqueLead = createLead(
+        UUID.randomUUID(), "ivan@mail.ru", "+7123", "TechCorp", LeadStatus.NEW);
 
     boolean added = storage.add(uniqueLead);
 
@@ -40,8 +41,10 @@ class LeadStorageTest {
   @Test
   void shouldRejectDuplicateWhenEmailAlreadyExists() {
     LeadStorage storage = new LeadStorage();
-    Lead existingLead = createLead(UUID.randomUUID(), "ivan@mail.ru", "+7123", "TechCorp", LeadStatus.NEW);
-    Lead duplicateLead = createLead(UUID.randomUUID(), "ivan@mail.ru", "+7456", "Other", LeadStatus.NEW);
+    Lead existingLead = createLead(
+        UUID.randomUUID(), "ivan@mail.ru", "+7123", "TechCorp", LeadStatus.NEW);
+    Lead duplicateLead = createLead(
+        UUID.randomUUID(), "ivan@mail.ru", "+7456", "Other", LeadStatus.NEW);
     storage.add(existingLead);
 
     boolean added = storage.add(duplicateLead);
@@ -55,10 +58,12 @@ class LeadStorageTest {
   void shouldThrowExceptionWhenStorageIsFull() {
     LeadStorage storage = new LeadStorage();
     for (int index = 0; index < 100; index++) {
-      storage.add(createLead(UUID.randomUUID(), "lead" + index + "@mail.ru", "+7000", "Company", LeadStatus.NEW));
+      storage.add(createLead(
+          UUID.randomUUID(), "lead" + index + "@mail.ru", "+7000", "Company", LeadStatus.NEW));
     }
 
-    Lead hundredFirstLead = createLead(UUID.randomUUID(), "lead101@mail.ru", "+7001", "Company", LeadStatus.NEW);
+    Lead hundredFirstLead = createLead(
+        UUID.randomUUID(), "lead101@mail.ru", "+7001", "Company", LeadStatus.NEW);
 
     assertThatThrownBy(() -> storage.add(hundredFirstLead))
         .isInstanceOf(IllegalStateException.class)
@@ -68,8 +73,10 @@ class LeadStorageTest {
   @Test
   void shouldReturnOnlyAddedLeadsWhenFindAllCalled() {
     LeadStorage storage = new LeadStorage();
-    Lead firstLead = createLead(UUID.randomUUID(), "ivan@mail.ru", "+7123", "TechCorp", LeadStatus.NEW);
-    Lead secondLead = createLead(UUID.randomUUID(), "maria@startup.io", "+7456", "StartupLab", LeadStatus.NEW);
+    Lead firstLead = createLead(
+        UUID.randomUUID(), "ivan@mail.ru", "+7123", "TechCorp", LeadStatus.NEW);
+    Lead secondLead = createLead(
+        UUID.randomUUID(), "maria@startup.io", "+7456", "StartupLab", LeadStatus.NEW);
     storage.add(firstLead);
     storage.add(secondLead);
 
