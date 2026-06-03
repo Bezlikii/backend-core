@@ -13,7 +13,7 @@ version = '1.0-SNAPSHOT'
 
 ext {
     junitVersion = '5.11.0'
-    junitPlatformVersion = '1.11.0'
+    junitPlatformVersion = '1.12.2'
     assertjVersion = '3.27.3'
     lombokVersion = '1.18.40'
     mockitoCoreVersion = '5.20.0'
