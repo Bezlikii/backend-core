@@ -1,14 +1,14 @@
 package ru.mentee.power.crm.infrastructure;
 
 import ru.mentee.power.crm.domain.Lead;
-import ru.mentee.power.crm.domain.Repository;
+import ru.mentee.power.crm.domain.CrudRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public class InMemoryLeadRepository implements Repository<Lead> {
+public class InMemoryLeadRepository implements CrudRepository<Lead> {
   private final List<Lead> storage = new ArrayList<>();
 
   @Override
