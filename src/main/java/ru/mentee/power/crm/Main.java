@@ -10,7 +10,6 @@ import ru.mentee.power.crm.servlet.LeadListServlet;
 
 import java.io.File;
 
-@Generated
 public class Main {
   public static void main(String[] args) throws Exception {
 

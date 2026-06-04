@@ -4,3 +4,12 @@ server:
 spring:
   application:
     name: mentee-power-crm
+
+gg:
+  jte:
+    templateLocation: src/main/jte
+    developmentMode: true
+
+logging:
+  level:
+    org.springframework.web: DEBUG

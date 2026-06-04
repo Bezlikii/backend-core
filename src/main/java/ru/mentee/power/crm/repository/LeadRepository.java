@@ -1,7 +1,8 @@
 package ru.mentee.power.crm.repository;
 
+import org.springframework.stereotype.Repository;
 import ru.mentee.power.crm.domain.Lead;
-import ru.mentee.power.crm.domain.Repository;
+import ru.mentee.power.crm.domain.CrudRepository;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,7 +11,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
-public class LeadRepository implements Repository<Lead> {
+@Repository
+public class LeadRepository implements CrudRepository<Lead> {
   private final Map<UUID, Lead> storage = new HashMap<>();
   private final Map<String, UUID> emailIndex = new HashMap<>();
 

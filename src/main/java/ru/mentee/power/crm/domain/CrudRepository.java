@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface Repository<T> {
+public interface CrudRepository<T> {
   T save(T entity);
 
   void delete(UUID id);
