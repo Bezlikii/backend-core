@@ -1,4 +1,4 @@
-package ru.mentee.power.crm.infrastructure;
+package ru.mentee.power.crm.educational.infrastructure;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

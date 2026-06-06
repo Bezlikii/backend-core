@@ -1,4 +1,4 @@
-package ru.mentee.power.crm.infrastructure;
+package ru.mentee.power.crm.educational.infrastructure;
 
 import ru.mentee.power.crm.domain.Lead;
 import ru.mentee.power.crm.domain.CrudRepository;
