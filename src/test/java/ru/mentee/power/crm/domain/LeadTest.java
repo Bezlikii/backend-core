@@ -81,18 +81,18 @@ class LeadTest {
   void shouldCreateLeadWhenStatusIsQualified() {
     Address address = new Address("Moscow", "Izmailovskaya", "876354");
     Contact contact = new Contact("test@gmail.com", "+76584936574", address);
-    Lead lead = new Lead(UUID.randomUUID(), contact, "TestCompany", LeadStatus.QUALIFIED);
+    Lead lead = new Lead(UUID.randomUUID(), contact, "TestCompany", LeadStatus.CONTACTED);
 
-    assertThat(lead.status()).isEqualTo(LeadStatus.QUALIFIED);
+    assertThat(lead.status()).isEqualTo(LeadStatus.CONTACTED);
   }
 
   @Test
   void shouldCreateLeadWhenStatusIsConverted() {
     Address address = new Address("Moscow", "Izmailovskaya", "876354");
     Contact contact = new Contact("test@gmail.com", "+76584936574", address);
-    Lead lead = new Lead(UUID.randomUUID(), contact, "TestCompany", LeadStatus.CONVERTED);
+    Lead lead = new Lead(UUID.randomUUID(), contact, "TestCompany", LeadStatus.QUALIFIED);
 
-    assertThat(lead.status()).isEqualTo(LeadStatus.CONVERTED);
+    assertThat(lead.status()).isEqualTo(LeadStatus.QUALIFIED);
   }
 
   @Test

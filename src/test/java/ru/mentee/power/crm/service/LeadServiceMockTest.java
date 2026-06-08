@@ -57,7 +57,7 @@ public class LeadServiceMockTest {
   void shouldNotCallSaveWhenEmailExists() {
     Address address = new Address("Moscow", "Eliseevskaya 15", "987465");
     Contact contact = new Contact("test@gmail.com", "+79167654563245", address);
-    Lead expectedLead = new Lead(UUID.randomUUID(), contact, "TestCompany", LeadStatus.CONVERTED);
+    Lead expectedLead = new Lead(UUID.randomUUID(), contact, "TestCompany", LeadStatus.QUALIFIED);
 
     when(mockCrudRepository.findByEmail("test@gmail.com"))
         .thenReturn(Optional.of(expectedLead));

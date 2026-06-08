@@ -21,10 +21,10 @@ public class Main {
     Address defaultAddress = new Address("Moscow", "Tverskaya", "125009");
 
     leadService.addLead("ivan@example.com", "+7-900-111-22-33", defaultAddress, "TechCorp", LeadStatus.NEW);
-    leadService.addLead("maria@example.com", "+7-900-222-33-44", defaultAddress, "DesignStudio", LeadStatus.QUALIFIED);
+    leadService.addLead("maria@example.com", "+7-900-222-33-44", defaultAddress, "DesignStudio", LeadStatus.CONTACTED);
     leadService.addLead("alex@example.com", "+7-900-333-44-55", defaultAddress, "DataFlow", LeadStatus.NEW);
-    leadService.addLead("elena@example.com", "+7-900-444-55-66", defaultAddress, "CloudNet", LeadStatus.CONVERTED);
-    leadService.addLead("dmitry@example.com", "+7-900-555-66-77", defaultAddress, "WebSoft", LeadStatus.QUALIFIED);
+    leadService.addLead("elena@example.com", "+7-900-444-55-66", defaultAddress, "CloudNet", LeadStatus.QUALIFIED);
+    leadService.addLead("dmitry@example.com", "+7-900-555-66-77", defaultAddress, "WebSoft", LeadStatus.CONTACTED);
 
     String baseDir = new File(".").getAbsolutePath();
 
