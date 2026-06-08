@@ -80,7 +80,7 @@ class InMemoryLeadRepositoryTest {
     UUID id3 = UUID.randomUUID();
     Lead lead1 = createLead(id1, "test@gmail.com", "+79256743845", "TestCompany", LeadStatus.NEW);
     Lead lead2 = createLead(
-        id2, "test2@gmail.com", "+79567845656", "Test2Company", LeadStatus.QUALIFIED);
+        id2, "test2@gmail.com", "+79567845656", "Test2Company", LeadStatus.CONTACTED);
     Lead lead3 = createLead(id3, "test3@gmail.com", "+76453896453", "TestCompany", LeadStatus.NEW);
     repository.save(lead1);
     repository.save(lead2);
@@ -107,7 +107,7 @@ class InMemoryLeadRepositoryTest {
     UUID id3 = UUID.randomUUID();
     Lead lead1 = createLead(id1, "test@gmail.com", "+79256743845", "TestCompany", LeadStatus.NEW);
     Lead lead2 = createLead(
-        id2, "test2@gmail.com", "+79567845656", "Test2Company", LeadStatus.QUALIFIED);
+        id2, "test2@gmail.com", "+79567845656", "Test2Company", LeadStatus.CONTACTED);
     Lead lead3 = createLead(id3, "test3@gmail.com", "+76453896453", "TestCompany", LeadStatus.NEW);
     repository.save(lead1);
     repository.save(lead2);
@@ -167,7 +167,7 @@ class InMemoryLeadRepositoryTest {
     Lead lead1 = createLead(
         UUID.randomUUID(), "test@gmail.com", "+79256743845", "TestCompany", LeadStatus.NEW);
     Lead lead2 = createLead(
-        UUID.randomUUID(), "test@gmail.com", "+79256743845", "OtherCompany", LeadStatus.QUALIFIED);
+        UUID.randomUUID(), "test@gmail.com", "+79256743845", "OtherCompany", LeadStatus.CONTACTED);
     repository.save(lead1);
     repository.save(lead2);
 

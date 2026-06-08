@@ -121,13 +121,13 @@ class StackComparisonTest {
     leadService.addLead("ivan@example.com", "+7-900-111-22-33",
         addr, "TechCorp", LeadStatus.NEW);
     leadService.addLead("maria@example.com", "+7-900-222-33-44",
-        addr, "DesignStudio", LeadStatus.QUALIFIED);
+        addr, "DesignStudio", LeadStatus.CONTACTED);
     leadService.addLead("alex@example.com", "+7-900-333-44-55",
         addr, "DataFlow", LeadStatus.NEW);
     leadService.addLead("elena@example.com", "+7-900-444-55-66",
-        addr, "CloudNet", LeadStatus.CONVERTED);
+        addr, "CloudNet", LeadStatus.QUALIFIED);
     leadService.addLead("dmitry@example.com", "+7-900-555-66-77",
-        addr, "WebSoft", LeadStatus.QUALIFIED);
+        addr, "WebSoft", LeadStatus.CONTACTED);
 
     Tomcat localTomcat = new Tomcat();
     localTomcat.setPort(SERVLET_PORT);

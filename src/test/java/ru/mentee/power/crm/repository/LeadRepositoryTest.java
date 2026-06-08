@@ -71,7 +71,7 @@ class LeadRepositoryTest {
     Lead lead1 = new Lead(id, new Contact("test1@gmail.com", "+7001", address),
         "Company1", LeadStatus.NEW);
     Lead lead2 = new Lead(id, new Contact("test2@gmail.com", "+7002", address),
-        "Company2", LeadStatus.QUALIFIED);
+        "Company2", LeadStatus.CONTACTED);
     repository.save(lead1);
     repository.save(lead2);
     assertThat(repository.findById(id)).contains(lead2);
@@ -125,7 +125,7 @@ class LeadRepositoryTest {
         new Address("Moscow", "Tverskaya 1", "101000"));
     Lead originalLead = new Lead(UUID.randomUUID(), sharedContact, "Acme Corp", LeadStatus.NEW);
     Lead duplicateLead = new Lead(
-        UUID.randomUUID(), sharedContact, "TechCorp", LeadStatus.QUALIFIED);
+        UUID.randomUUID(), sharedContact, "TechCorp", LeadStatus.CONTACTED);
 
     repository.save(originalLead);
     repository.save(duplicateLead);

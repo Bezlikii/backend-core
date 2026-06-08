@@ -122,8 +122,8 @@ class LeadListServletTest {
   void shouldGenerateTableRowForEachLead() throws Exception {
     List<Lead> leads = Arrays.asList(
         createTestLead("test1@example.com", "+79161111111", "Company1", LeadStatus.NEW),
-        createTestLead("test2@example.com", "+79162222222", "Company2", LeadStatus.QUALIFIED),
-        createTestLead("test3@example.com", "+79163333333", "Company3", LeadStatus.CONVERTED)
+        createTestLead("test2@example.com", "+79162222222", "Company2", LeadStatus.CONTACTED),
+        createTestLead("test3@example.com", "+79163333333", "Company3", LeadStatus.QUALIFIED)
     );
     when(leadService.findAll()).thenReturn(leads);
 
@@ -141,7 +141,7 @@ class LeadListServletTest {
   @Test
   void shouldContainLeadDataInHtml() throws Exception {
     Lead lead = createTestLead(
-        "john@example.com", "+79161234567", "TechCorp", LeadStatus.QUALIFIED);
+        "john@example.com", "+79161234567", "TechCorp", LeadStatus.CONTACTED);
     when(leadService.findAll()).thenReturn(Collections.singletonList(lead));
 
     servlet.doGet(request, response);
@@ -151,7 +151,7 @@ class LeadListServletTest {
     assertThat(html)
         .contains("john@example.com")
         .contains("TechCorp")
-        .contains("QUALIFIED");
+        .contains("CONTACTED");
   }
 
   @Test
