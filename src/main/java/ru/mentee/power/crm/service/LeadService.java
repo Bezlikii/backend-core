@@ -1,16 +1,16 @@
 package ru.mentee.power.crm.service;
 
-import org.springframework.stereotype.Service;
-import ru.mentee.power.crm.domain.Address;
-import ru.mentee.power.crm.domain.Contact;
-import ru.mentee.power.crm.domain.Lead;
-import ru.mentee.power.crm.domain.LeadStatus;
-import ru.mentee.power.crm.domain.CrudRepository;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
+
+import org.springframework.stereotype.Service;
+import ru.mentee.power.crm.domain.Address;
+import ru.mentee.power.crm.domain.Contact;
+import ru.mentee.power.crm.domain.CrudRepository;
+import ru.mentee.power.crm.domain.Lead;
+import ru.mentee.power.crm.domain.LeadStatus;
 
 @Service
 public class LeadService {

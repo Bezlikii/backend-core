@@ -60,4 +60,18 @@ class AddressTest {
         .isInstanceOf(IllegalArgumentException.class)
         .hasMessageContaining("Zip");
   }
+
+  @Test
+  void shouldThrowExceptionWhenStreetIsBlank() {
+    assertThatThrownBy(() -> new Address("Moscow", "  ", "123456"))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessageContaining("Street");
+  }
+
+  @Test
+  void shouldThrowExceptionWhenStreetIsNull() {
+    assertThatThrownBy(() -> new Address("Moscow", null, "123456"))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessageContaining("Street");
+  }
 }

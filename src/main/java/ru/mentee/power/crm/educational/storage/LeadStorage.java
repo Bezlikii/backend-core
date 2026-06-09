@@ -1,8 +1,8 @@
 package ru.mentee.power.crm.educational.storage;
 
-import ru.mentee.power.crm.domain.Lead;
-
 import java.util.UUID;
+
+import ru.mentee.power.crm.domain.Lead;
 
 public class LeadStorage {
   private Lead[] leads = new Lead[100];

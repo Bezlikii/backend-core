@@ -1,13 +1,13 @@
 package ru.mentee.power.crm.educational.web;
 
-import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
-import com.sun.net.httpserver.HttpServer;
-
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.nio.charset.StandardCharsets;
+
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpHandler;
+import com.sun.net.httpserver.HttpServer;
 
 public class HelloCrmServer {
 
@@ -32,7 +32,8 @@ public class HelloCrmServer {
   static class HelloHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-      String htmlString = "<!DOCTYPE html><html><head><meta charset=\"UTF-8\"></head><body><h1>Hello CRM!</h1></body></html>";
+      String htmlString = "<!DOCTYPE html><html><head><meta charset=\"UTF-8\">"
+          + "</head><body><h1>Hello CRM!</h1></body></html>";
       byte[] bytes = htmlString.getBytes(StandardCharsets.UTF_8);
       exchange.getResponseHeaders().set("Content-Type", "text/html; charset=UTF-8");
       exchange.sendResponseHeaders(200, bytes.length);
