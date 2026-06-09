@@ -1,5 +1,7 @@
 package ru.mentee.power.crm;
 
+import java.io.File;
+
 import org.apache.catalina.Context;
 import org.apache.catalina.startup.Tomcat;
 import ru.mentee.power.crm.domain.Address;
@@ -7,8 +9,6 @@ import ru.mentee.power.crm.domain.LeadStatus;
 import ru.mentee.power.crm.repository.LeadRepository;
 import ru.mentee.power.crm.service.LeadService;
 import ru.mentee.power.crm.servlet.LeadListServlet;
-
-import java.io.File;
 
 public class Main {
   public static void main(String[] args) throws Exception {
@@ -20,11 +20,16 @@ public class Main {
 
     Address defaultAddress = new Address("Moscow", "Tverskaya", "125009");
 
-    leadService.addLead("ivan@example.com", "+7-900-111-22-33", defaultAddress, "TechCorp", LeadStatus.NEW);
-    leadService.addLead("maria@example.com", "+7-900-222-33-44", defaultAddress, "DesignStudio", LeadStatus.CONTACTED);
-    leadService.addLead("alex@example.com", "+7-900-333-44-55", defaultAddress, "DataFlow", LeadStatus.NEW);
-    leadService.addLead("elena@example.com", "+7-900-444-55-66", defaultAddress, "CloudNet", LeadStatus.QUALIFIED);
-    leadService.addLead("dmitry@example.com", "+7-900-555-66-77", defaultAddress, "WebSoft", LeadStatus.CONTACTED);
+    leadService.addLead("ivan@example.com", "+7-900-111-22-33", defaultAddress,
+        "TechCorp", LeadStatus.NEW);
+    leadService.addLead("maria@example.com", "+7-900-222-33-44", defaultAddress,
+        "DesignStudio", LeadStatus.CONTACTED);
+    leadService.addLead("alex@example.com", "+7-900-333-44-55", defaultAddress,
+        "DataFlow", LeadStatus.NEW);
+    leadService.addLead("elena@example.com", "+7-900-444-55-66", defaultAddress,
+        "CloudNet", LeadStatus.QUALIFIED);
+    leadService.addLead("dmitry@example.com", "+7-900-555-66-77", defaultAddress,
+        "WebSoft", LeadStatus.CONTACTED);
 
     String baseDir = new File(".").getAbsolutePath();
 

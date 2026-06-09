@@ -24,6 +24,15 @@
             </a>
         </div>
 
+        <div class="mb-4 flex justify-between items-center">
+            <a
+                    href="/leads/new"
+                    class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+            >
+                + Добавить лида
+            </a>
+        </div>
+
         @if(currentFilter != null)
             <p class="text-sm text-gray-600 mb-2">Показаны лиды со статусом: ${currentFilter}</p>
         @endif

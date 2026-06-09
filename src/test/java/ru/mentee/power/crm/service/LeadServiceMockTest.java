@@ -20,9 +20,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.mentee.power.crm.domain.Address;
 import ru.mentee.power.crm.domain.Contact;
+import ru.mentee.power.crm.domain.CrudRepository;
 import ru.mentee.power.crm.domain.Lead;
 import ru.mentee.power.crm.domain.LeadStatus;
-import ru.mentee.power.crm.domain.CrudRepository;
 
 @ExtendWith(MockitoExtension.class)
 public class LeadServiceMockTest {
