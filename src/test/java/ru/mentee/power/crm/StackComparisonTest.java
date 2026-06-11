@@ -110,7 +110,7 @@ class StackComparisonTest {
   }
 
   private int countTableRows(String html) {
-    return html.split("<tr ").length - 1;
+    return html.split("<tr").length - 1;
   }
 
   private static long startServlet() {
