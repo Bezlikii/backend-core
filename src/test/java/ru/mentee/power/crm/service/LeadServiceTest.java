@@ -8,6 +8,8 @@ import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import ru.mentee.power.crm.domain.Address;
 import ru.mentee.power.crm.domain.Lead;
 import ru.mentee.power.crm.domain.LeadStatus;
@@ -124,14 +126,15 @@ class LeadServiceTest {
   }
 
   @Test
-  void shouldCreateLeadWhenCompanyIsNull() {
+  void shouldThrowExceptionWhenCompanyIsNull() {
     Address address = new Address("Moscow", "Izmailovskaya", "123456");
 
-    Lead result = service.addLead("test@example.com", "+79161234567",
-        address, null, LeadStatus.NEW);
-
-    assertThat(result).isNotNull();
-    assertThat(result.company()).isNull();
+    assertThatThrownBy(() ->
+        service.addLead("test@example.com", "+79161234567",
+            address, null, LeadStatus.NEW)
+    )
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessageContaining("Company");
   }
 
   @Test
@@ -151,8 +154,13 @@ class LeadServiceTest {
     assertThat(result).isEmpty();
   }
 
-  @Test
-  void shouldReturnOnlyNewLeadsWhenFindByStatusNew() {
+  @ParameterizedTest(name = "[{index}] status={0}, expectedSize={1}")
+  @CsvSource({
+      "NEW,        3",
+      "CONTACTED,  5",
+      "QUALIFIED,  2"
+  })
+  void shouldFilterLeadsByStatus(String searchStatus, int expectedSize) {
     Address address = new Address("Moscow", "Test", "123456");
 
     service.addLead("new1@test.com", "+79991111111", address, "Company", LeadStatus.NEW);
@@ -166,52 +174,11 @@ class LeadServiceTest {
     service.addLead("ql1@test.com", "+79991111119", address, "Company", LeadStatus.QUALIFIED);
     service.addLead("ql2@test.com", "+79991111120", address, "Company", LeadStatus.QUALIFIED);
 
-    List<Lead> result = service.findByStatus(LeadStatus.NEW);
+    LeadStatus search = LeadStatus.valueOf(searchStatus);
+    List<Lead> result = service.findByStatus(search);
 
-    assertThat(result).hasSize(3);
-    assertThat(result).allMatch(lead -> lead.status().equals(LeadStatus.NEW));
-  }
-
-  @Test
-  void shouldReturnOnlyContactedLeadsWhenFindByStatusContacted() {
-    Address address = new Address("Moscow", "Test", "123456");
-
-    service.addLead("new1@test.com", "+79991111111", address, "Company", LeadStatus.NEW);
-    service.addLead("new2@test.com", "+79991111112", address, "Company", LeadStatus.NEW);
-    service.addLead("new3@test.com", "+79991111113", address, "Company", LeadStatus.NEW);
-    service.addLead("ct1@test.com", "+79991111114", address, "Company", LeadStatus.CONTACTED);
-    service.addLead("ct2@test.com", "+79991111115", address, "Company", LeadStatus.CONTACTED);
-    service.addLead("ct3@test.com", "+79991111116", address, "Company", LeadStatus.CONTACTED);
-    service.addLead("ct4@test.com", "+79991111117", address, "Company", LeadStatus.CONTACTED);
-    service.addLead("ct5@test.com", "+79991111118", address, "Company", LeadStatus.CONTACTED);
-    service.addLead("ql1@test.com", "+79991111119", address, "Company", LeadStatus.QUALIFIED);
-    service.addLead("ql2@test.com", "+79991111120", address, "Company", LeadStatus.QUALIFIED);
-
-    List<Lead> result = service.findByStatus(LeadStatus.CONTACTED);
-
-    assertThat(result).hasSize(5);
-    assertThat(result).allMatch(lead -> lead.status().equals(LeadStatus.CONTACTED));
-  }
-
-  @Test
-  void shouldReturnOnlyQualifiedLeadsWhenFindByStatusQualified() {
-    Address address = new Address("Moscow", "Test", "123456");
-
-    service.addLead("new1@test.com", "+79991111111", address, "Company", LeadStatus.NEW);
-    service.addLead("new2@test.com", "+79991111112", address, "Company", LeadStatus.NEW);
-    service.addLead("new3@test.com", "+79991111113", address, "Company", LeadStatus.NEW);
-    service.addLead("ct1@test.com", "+79991111114", address, "Company", LeadStatus.CONTACTED);
-    service.addLead("ct2@test.com", "+79991111115", address, "Company", LeadStatus.CONTACTED);
-    service.addLead("ct3@test.com", "+79991111116", address, "Company", LeadStatus.CONTACTED);
-    service.addLead("ct4@test.com", "+79991111117", address, "Company", LeadStatus.CONTACTED);
-    service.addLead("ct5@test.com", "+79991111118", address, "Company", LeadStatus.CONTACTED);
-    service.addLead("ql1@test.com", "+79991111119", address, "Company", LeadStatus.QUALIFIED);
-    service.addLead("ql2@test.com", "+79991111120", address, "Company", LeadStatus.QUALIFIED);
-
-    List<Lead> result = service.findByStatus(LeadStatus.QUALIFIED);
-
-    assertThat(result).hasSize(2);
-    assertThat(result).allMatch(lead -> lead.status().equals(LeadStatus.QUALIFIED));
+    assertThat(result).hasSize(expectedSize);
+    assertThat(result).allMatch(lead -> lead.status().equals(search));
   }
 
   @Test

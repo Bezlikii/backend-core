@@ -14,6 +14,9 @@ public record Lead(UUID id, Contact contact, String company, LeadStatus status) 
     if (status == null) {
       throw new IllegalArgumentException("Status не может быть null");
     }
+    if (company == null) {
+      throw new IllegalArgumentException("Company не должно быть null");
+    }
   }
 
   @Override
