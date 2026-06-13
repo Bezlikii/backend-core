@@ -5,6 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import ru.mentee.power.crm.domain.Address;
+import ru.mentee.power.crm.domain.LeadIndustry;
 import ru.mentee.power.crm.domain.LeadStatus;
 import ru.mentee.power.crm.service.LeadService;
 
@@ -19,15 +20,15 @@ public class Application {
     return args -> {
       Address addr = new Address("Moscow", "Tverskaya", "125009");
       leadService.addLead("ivan@example.com", "+7-900-111-22-33", addr,
-          "TechCorp", LeadStatus.NEW);
+          "TechCorp", LeadStatus.NEW, LeadIndustry.IT);
       leadService.addLead("maria@example.com", "+7-900-222-33-44", addr,
-          "DesignStudio", LeadStatus.CONTACTED);
+          "DesignStudio", LeadStatus.CONTACTED, LeadIndustry.RETAIL);
       leadService.addLead("alex@example.com", "+7-900-333-44-55", addr,
-          "DataFlow", LeadStatus.NEW);
+          "DataFlow", LeadStatus.NEW, LeadIndustry.IT);
       leadService.addLead("elena@example.com", "+7-900-444-55-66", addr,
-          "CloudNet", LeadStatus.QUALIFIED);
+          "CloudNet", LeadStatus.QUALIFIED, LeadIndustry.FINANCE);
       leadService.addLead("dmitry@example.com", "+7-900-555-66-77", addr,
-          "WebSoft", LeadStatus.CONTACTED);
+          "WebSoft", LeadStatus.CONTACTED, LeadIndustry.IT);
     };
   }
 }

@@ -20,35 +20,40 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.mentee.power.crm.domain.Address;
 import ru.mentee.power.crm.domain.Contact;
-import ru.mentee.power.crm.domain.CrudRepository;
+import ru.mentee.power.crm.domain.IndustryDictionary;
 import ru.mentee.power.crm.domain.Lead;
+import ru.mentee.power.crm.domain.LeadIndustry;
 import ru.mentee.power.crm.domain.LeadStatus;
+import ru.mentee.power.crm.repository.LeadRepository;
 
 @ExtendWith(MockitoExtension.class)
 public class LeadServiceMockTest {
 
   @Mock
-  private CrudRepository<Lead> mockCrudRepository;
+  private LeadRepository mockRepository;
+
+  @Mock
+  private IndustryDictionary mockDictionary;
 
   private LeadService service;
 
   @BeforeEach
   void setUp() {
-    service = new LeadService(mockCrudRepository);
+    service = new LeadService(mockRepository, mockDictionary);
   }
 
   @Test
   void shouldCallRepositorySaveWhenAddingNewLead() {
-    when(mockCrudRepository.findByEmail(anyString()))
+    when(mockRepository.findByEmail(anyString()))
         .thenReturn(Optional.empty());
-    when(mockCrudRepository.save(any(Lead.class)))
+    when(mockRepository.save(any(Lead.class)))
         .thenAnswer(invocation -> invocation.getArgument(0));
 
     Address address = new Address("Moscow", "Eliseevskaya 15", "987465");
     Lead result = service.addLead("new@example.com", "+79169876453",
-        address, "Company", LeadStatus.NEW);
+        address, "Company", LeadStatus.NEW, LeadIndustry.IT);
 
-    verify(mockCrudRepository, times(1)).save(any(Lead.class));
+    verify(mockRepository, times(1)).save(any(Lead.class));
 
     assertThat(result.contact().email()).isEqualTo("new@example.com");
   }
@@ -57,32 +62,32 @@ public class LeadServiceMockTest {
   void shouldNotCallSaveWhenEmailExists() {
     Address address = new Address("Moscow", "Eliseevskaya 15", "987465");
     Contact contact = new Contact("test@gmail.com", "+79167654563245", address);
-    Lead expectedLead = new Lead(UUID.randomUUID(), contact, "TestCompany", LeadStatus.QUALIFIED);
+    Lead existingLead = new Lead(UUID.randomUUID(), contact, "TestCompany", LeadStatus.QUALIFIED, LeadIndustry.IT);
 
-    when(mockCrudRepository.findByEmail("test@gmail.com"))
-        .thenReturn(Optional.of(expectedLead));
+    when(mockRepository.findByEmail("test@gmail.com"))
+        .thenReturn(Optional.of(existingLead));
 
     Address address2 = new Address("Voronesh", "Leningradskaya 10", "746283");
 
     assertThatThrownBy(() ->
-        service.addLead("test@gmail.com", "+79169854637", address2, "Test2Company", LeadStatus.NEW))
+        service.addLead("test@gmail.com", "+79169854637", address2, "Test2Company", LeadStatus.NEW, LeadIndustry.IT))
         .isInstanceOf(IllegalStateException.class);
 
-    verify(mockCrudRepository, never()).save(any(Lead.class));
+    verify(mockRepository, never()).save(any(Lead.class));
   }
 
   @Test
   void shouldCallFindByEmailBeforeSave() {
-    when(mockCrudRepository.findByEmail(anyString()))
+    when(mockRepository.findByEmail(anyString()))
         .thenReturn(Optional.empty());
-    when(mockCrudRepository.save((any(Lead.class))))
+    when(mockRepository.save((any(Lead.class))))
         .thenAnswer(invocation -> invocation.getArgument(0));
 
     Address address = new Address("Moscow", "Eliseevskaya 15", "987465");
-    service.addLead("new@example.com", "+79169876453", address, "Company", LeadStatus.NEW);
+    service.addLead("new@example.com", "+79169876453", address, "Company", LeadStatus.NEW, LeadIndustry.IT);
 
-    var inOrder = inOrder(mockCrudRepository);
-    inOrder.verify(mockCrudRepository).findByEmail("new@example.com");
-    inOrder.verify(mockCrudRepository).save(any(Lead.class));
+    var inOrder = inOrder(mockRepository);
+    inOrder.verify(mockRepository).findByEmail("new@example.com");
+    inOrder.verify(mockRepository).save(any(Lead.class));
   }
 }

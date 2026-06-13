@@ -10,6 +10,7 @@ import java.util.UUID;
 import org.springframework.stereotype.Repository;
 import ru.mentee.power.crm.domain.CrudRepository;
 import ru.mentee.power.crm.domain.Lead;
+import ru.mentee.power.crm.domain.LeadIndustry;
 
 @Repository
 public class LeadRepository implements CrudRepository<Lead> {
@@ -45,5 +46,11 @@ public class LeadRepository implements CrudRepository<Lead> {
   @Override
   public List<Lead> findAll() {
     return new ArrayList<>(storage.values());
+  }
+
+  public List<Lead> findByIndustry(LeadIndustry industry) {
+    return storage.values().stream()
+        .filter(lead -> lead.industry() == industry)
+        .toList();
   }
 }

@@ -23,7 +23,7 @@ class CustomerTest {
   void shouldDemonstrateContactReuseAcrossLeadAndCustomer() {
     Address address = new Address("Voronesh", "Lenina", "654382");
     Contact contact = new Contact("test@gmail.com", "+79165473485", address);
-    Lead lead = new Lead(UUID.randomUUID(), contact, "TestCompany", LeadStatus.NEW);
+    Lead lead = new Lead(UUID.randomUUID(), contact, "TestCompany", LeadStatus.NEW, LeadIndustry.IT);
     Customer customer = new Customer(UUID.randomUUID(), contact, address, LoyaltyTier.SILVER);
     assertThat(lead.contact()).isEqualTo(customer.contact());
   }

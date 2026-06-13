@@ -19,7 +19,7 @@ class LeadEqualsHashCodeTest {
   }
 
   private Lead createLead(UUID id, String email, String phone, String company, LeadStatus status) {
-    return new Lead(id, createContact(email, phone), company, status);
+    return new Lead(id, createContact(email, phone), company, status, LeadIndustry.IT);
   }
 
   @Test

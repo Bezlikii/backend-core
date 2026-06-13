@@ -3,7 +3,13 @@ package ru.mentee.power.crm.domain;
 import java.util.Objects;
 import java.util.UUID;
 
-public record Lead(UUID id, Contact contact, String company, LeadStatus status) {
+public record Lead(
+    UUID id,
+    Contact contact,
+    String company,
+    LeadStatus status,
+    LeadIndustry industry
+) {
   public Lead {
     if (id == null) {
       throw new IllegalArgumentException("Id не должно быть null");
@@ -16,6 +22,9 @@ public record Lead(UUID id, Contact contact, String company, LeadStatus status) 
     }
     if (company == null) {
       throw new IllegalArgumentException("Company не должно быть null");
+    }
+    if (industry == null) {
+      throw new IllegalArgumentException("Industry не должно быть null");
     }
   }
 

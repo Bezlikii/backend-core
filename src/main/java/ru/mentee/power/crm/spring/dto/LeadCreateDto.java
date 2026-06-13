@@ -1,5 +1,6 @@
 package ru.mentee.power.crm.spring.dto;
 
+import ru.mentee.power.crm.domain.LeadIndustry;
 import ru.mentee.power.crm.domain.LeadStatus;
 
 public record LeadCreateDto(
@@ -9,6 +10,7 @@ public record LeadCreateDto(
     String street,
     String zip,
     String company,
-    LeadStatus status
+    LeadStatus status,
+    LeadIndustry industry
 ) {
 }
