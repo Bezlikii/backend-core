@@ -1,5 +1,7 @@
 package ru.mentee.power.crm.spring.controller;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,8 +13,6 @@ import ru.mentee.power.crm.domain.Lead;
 import ru.mentee.power.crm.domain.LeadStatus;
 import ru.mentee.power.crm.service.LeadService;
 import ru.mentee.power.crm.spring.dto.LeadCreateDto;
-
-import java.util.List;
 
 @Controller
 public class LeadController {
