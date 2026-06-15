@@ -1,23 +1,32 @@
-package ru.mentee.power.crm.service;
+package ru.mentee.power.crm.spring.service;
+
+import jakarta.annotation.PostConstruct;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import ru.mentee.power.crm.domain.Address;
+import ru.mentee.power.crm.domain.Contact;
+import ru.mentee.power.crm.domain.Lead;
+import ru.mentee.power.crm.domain.LeadStatus;
+import ru.mentee.power.crm.spring.repository.LeadRepository;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import org.springframework.stereotype.Service;
-import ru.mentee.power.crm.domain.Address;
-import ru.mentee.power.crm.domain.Contact;
-import ru.mentee.power.crm.domain.CrudRepository;
-import ru.mentee.power.crm.domain.Lead;
-import ru.mentee.power.crm.domain.LeadStatus;
-
 @Service
 public class LeadService {
+  private static final Logger log = LoggerFactory.getLogger(LeadService.class);
+  private final LeadRepository repository;
 
-  private final CrudRepository<Lead> repository;
-
-  public LeadService(CrudRepository<Lead> repository) {
+  public LeadService(LeadRepository repository) {
     this.repository = repository;
+    log.info("Lead constructor called");
+  }
+
+  @PostConstruct
+  void init() {
+    log.info("LeadService @PostConstruct init() called — Bean lifecycle phase");
   }
 
   public Lead addLead(String email, String phone, Address address,

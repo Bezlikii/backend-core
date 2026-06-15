@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ru.mentee.power.crm.domain.Address;
 import ru.mentee.power.crm.domain.Lead;
 import ru.mentee.power.crm.domain.LeadStatus;
-import ru.mentee.power.crm.service.LeadService;
 import ru.mentee.power.crm.spring.dto.LeadCreateDto;
+import ru.mentee.power.crm.spring.service.LeadService;
 
 @Controller
 public class LeadController {
