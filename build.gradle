@@ -2,7 +2,6 @@ plugins {
     id 'java'
     id 'checkstyle'
     id 'jacoco'
-    id 'application'
     id 'gg.jte.gradle' version '3.1.15'
     id 'org.springframework.boot' version '3.5.0'
     id 'io.spring.dependency-management' version '1.1.4'
@@ -18,8 +17,6 @@ ext {
     lombokVersion = '1.18.40'
     mockitoCoreVersion = '5.20.0'
     mockitoJunitJupiterVersion = '5.20.0'
-    servletVersion = '6.1.0'
-    tomcatVersion = '11.0.1'
     jteVersion = '3.1.15'
     springBootVersion = '3.5.0'
 }
@@ -42,8 +39,6 @@ dependencies {
     annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
     testImplementation "org.mockito:mockito-core:${mockitoCoreVersion}"
     testImplementation "org.mockito:mockito-junit-jupiter:${mockitoJunitJupiterVersion}"
-    implementation "jakarta.servlet:jakarta.servlet-api:${servletVersion}"
-    implementation "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}"
     implementation "gg.jte:jte:${jteVersion}"
     implementation "gg.jte:jte-runtime:${jteVersion}"
     implementation "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
@@ -100,10 +95,6 @@ jacocoTestCoverageVerification {
 
 check {
     dependsOn jacocoTestCoverageVerification
-}
-
-application {
-    mainClass = 'ru.mentee.power.crm.Main'
 }
 
 bootRun {

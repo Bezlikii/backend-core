@@ -6,9 +6,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import ru.mentee.power.crm.domain.Address;
 import ru.mentee.power.crm.domain.LeadStatus;
-import ru.mentee.power.crm.service.LeadService;
+import ru.mentee.power.crm.spring.service.LeadService;
 
-@SpringBootApplication(scanBasePackages = "ru.mentee.power.crm")
+@SpringBootApplication
 public class Application {
   public static void main(String[] args) {
     SpringApplication.run(Application.class, args);

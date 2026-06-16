@@ -8,15 +8,18 @@
 
 - Java 25 LTS
 - Gradle 9.3 (Groovy DSL)
-- JUnit 5.11.0 + AssertJ 3.27.3 (тестирование)
-- JaCoCo 0.8.14 (покрытие, мин. 80%, *Main.class исключён из проверки; методы с @Generated исключаются автоматически)
-- Lombok 1.18.40 (только в существующих учебных классах, не использовать в новых)
+- Spring Boot 3.5.0 (spring-boot-starter-web)
+- JTE 3.1.15 (шаблонизатор)
+- JUnit 5.11.0 + AssertJ 3.27.3 + Mockito 5.20.0 (тестирование)
+- JaCoCo 0.8.14 (покрытие, мин. 80%; методы с @Generated исключаются автоматически)
+- Lombok 1.18.40
 
 ## Commands
 
 - Сборка: `./gradlew build`
 - Тесты: `./gradlew test`
 - Один тест: `./gradlew test --tests "ru.mentee.power.crm.domain.LeadTest.shouldCreateLeadWhenValidData"`
+- Запуск: `./gradlew bootRun` (порт 8081)
 - Проверка стиля: `./gradlew checkstyleMain checkstyleTest`
 - Покрытие: `./gradlew jacocoTestReport` (отчёт: `build/reports/jacoco/test/html/index.html`)
 - Полная проверка: `./gradlew check`
@@ -36,7 +39,7 @@
 
 1. Сначала Plan Mode — читать и анализировать, не редактировать
 2. Перед изменениями: `git status`
-3. После изменений: `./gradlew check`
+3. После изменений: `./gradlew test` и `./gradlew check`
 4. Один класс → один тестовый класс, одна фича → один тест
 5. TDD: RED → GREEN → REFACTOR
 6. Коммиты с осмысленными сообщениями:
@@ -54,3 +57,6 @@
      - equals/hashCode in Lead overridden by id
      - Tests: 100% coverage, all GREEN
      ```
+7. Стиль тестов:
+   - Именование: `should<ExpectedBehavior>When<Condition>`
+   - BDD-паттерн: Arrange → Act → Assert
