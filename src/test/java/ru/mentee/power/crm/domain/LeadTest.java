@@ -12,7 +12,7 @@ class LeadTest {
   @Test
   void shouldCreateLeadWhenValidData() {
     Address address = new Address("Moscow", "Izmailovskaya", "876354");
-    Contact contact = new Contact("test@gmail.com", "+76584936574", address);
+    Contact contact = new Contact("Test User", "test@gmail.com", "+76584936574", address);
     Lead lead = new Lead(UUID.randomUUID(), contact, "TestCompany", LeadStatus.NEW);
 
     assertThat(lead.contact()).isEqualTo(contact);
@@ -21,7 +21,7 @@ class LeadTest {
   @Test
   void shouldAccessEmailThroughDelegationWhenLeadCreated() {
     Address address = new Address("Moscow", "Izmailovskaya", "876354");
-    Contact contact = new Contact("test@gmail.com", "+76584936574", address);
+    Contact contact = new Contact("Test User", "test@gmail.com", "+76584936574", address);
     Lead lead = new Lead(UUID.randomUUID(), contact, "TestCompany", LeadStatus.NEW);
 
     assertThat(lead.contact().email()).isEqualTo("test@gmail.com");
@@ -32,11 +32,11 @@ class LeadTest {
   void shouldBeEqualWhenSameIdButDifferentContact() {
     UUID uuid = UUID.randomUUID();
     Address address1 = new Address("Moscow", "Izmailovskaya", "876354");
-    Contact contact1 = new Contact("test1@gmail.com", "+76584936574", address1);
+    Contact contact1 = new Contact("User One", "test1@gmail.com", "+76584936574", address1);
     Lead lead1 = new Lead(uuid, contact1, "TestCompany", LeadStatus.NEW);
 
     Address address2 = new Address("Moscow", "Izmailovskaya", "876354");
-    Contact contact2 = new Contact("test2@gmail.com", "+76598762345", address2);
+    Contact contact2 = new Contact("User Two", "test2@gmail.com", "+76598762345", address2);
     Lead lead2 = new Lead(uuid, contact2, "TestCompany", LeadStatus.NEW);
 
     assertThat(lead1).isEqualTo(lead2);
@@ -52,7 +52,7 @@ class LeadTest {
   @Test
   void shouldThrowExceptionWhenStatusIsNull() {
     Address address = new Address("Moscow", "Izmailovskaya", "876354");
-    Contact contact = new Contact("test1@gmail.com", "+76584936574", address);
+    Contact contact = new Contact("Test User", "test1@gmail.com", "+76584936574", address);
 
     assertThatThrownBy(() -> new Lead(UUID.randomUUID(), contact, "TestCompany", null))
         .isInstanceOf(IllegalArgumentException.class)
@@ -62,7 +62,7 @@ class LeadTest {
   @Test
   void shouldDemonstrateThreeLevelCompositionWhenAccessingCity() {
     Address address = new Address("Moscow", "Izmailovskaya", "876354");
-    Contact contact = new Contact("test1@gmail.com", "+76584936574", address);
+    Contact contact = new Contact("Test User", "test1@gmail.com", "+76584936574", address);
     Lead lead = new Lead(UUID.randomUUID(), contact, "TestCompany", LeadStatus.NEW);
 
     assertThat(lead.contact().address().city()).isEqualTo("Moscow");
@@ -71,7 +71,7 @@ class LeadTest {
   @Test
   void shouldCreateLeadWhenStatusIsNew() {
     Address address = new Address("Moscow", "Izmailovskaya", "876354");
-    Contact contact = new Contact("test@gmail.com", "+76584936574", address);
+    Contact contact = new Contact("Test User", "test@gmail.com", "+76584936574", address);
     Lead lead = new Lead(UUID.randomUUID(), contact, "TestCompany", LeadStatus.NEW);
 
     assertThat(lead.status()).isEqualTo(LeadStatus.NEW);
@@ -80,7 +80,7 @@ class LeadTest {
   @Test
   void shouldCreateLeadWhenStatusIsQualified() {
     Address address = new Address("Moscow", "Izmailovskaya", "876354");
-    Contact contact = new Contact("test@gmail.com", "+76584936574", address);
+    Contact contact = new Contact("Test User", "test@gmail.com", "+76584936574", address);
     Lead lead = new Lead(UUID.randomUUID(), contact, "TestCompany", LeadStatus.CONTACTED);
 
     assertThat(lead.status()).isEqualTo(LeadStatus.CONTACTED);
@@ -89,7 +89,7 @@ class LeadTest {
   @Test
   void shouldCreateLeadWhenStatusIsConverted() {
     Address address = new Address("Moscow", "Izmailovskaya", "876354");
-    Contact contact = new Contact("test@gmail.com", "+76584936574", address);
+    Contact contact = new Contact("Test User", "test@gmail.com", "+76584936574", address);
     Lead lead = new Lead(UUID.randomUUID(), contact, "TestCompany", LeadStatus.QUALIFIED);
 
     assertThat(lead.status()).isEqualTo(LeadStatus.QUALIFIED);
@@ -98,7 +98,7 @@ class LeadTest {
   @Test
   void shouldThrowExceptionWhenIdIsNull() {
     Address address = new Address("Moscow", "Izmailovskaya", "876354");
-    Contact contact = new Contact("test@gmail.com", "+76584936574", address);
+    Contact contact = new Contact("Test User", "test@gmail.com", "+76584936574", address);
     assertThatThrownBy(() -> new Lead(null, contact, "TestCompany", LeadStatus.NEW))
         .isInstanceOf(IllegalArgumentException.class)
         .hasMessageContaining("Id");

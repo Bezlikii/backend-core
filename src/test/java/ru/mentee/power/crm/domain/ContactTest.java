@@ -10,7 +10,7 @@ class ContactTest {
   @Test
   void shouldCreateContactWhenValidData() {
     Address address = new Address("Moscow", "Izmailovskaya", "675438");
-    Contact contact = new Contact("alex@gmail.com", "+78754673456", address);
+    Contact contact = new Contact("Alex", "alex@gmail.com", "+78754673456", address);
     assertThat(contact.address()).isEqualTo(address);
     assertThat(contact.address().city()).isEqualTo("Moscow");
   }
@@ -18,14 +18,14 @@ class ContactTest {
   @Test
   void shouldDelegateToAddressWhenAccessingCity() {
     Address address = new Address("Moscow", "Izmailovskaya", "675438");
-    Contact contact = new Contact("alex@gmail.com", "+78754673456", address);
+    Contact contact = new Contact("Alex", "alex@gmail.com", "+78754673456", address);
     assertThat(contact.address().city()).isEqualTo("Moscow");
     assertThat(contact.address().street()).isEqualTo("Izmailovskaya");
   }
 
   @Test
   void shouldThrowExceptionWhenAddressIsNull() {
-    assertThatThrownBy(() -> new Contact("alex@gmail.com", "+78754673456", null))
+    assertThatThrownBy(() -> new Contact("Alex", "alex@gmail.com", "+78754673456", null))
         .isInstanceOf(IllegalArgumentException.class)
         .hasMessageContaining("Address");
   }
@@ -33,7 +33,7 @@ class ContactTest {
   @Test
   void shouldThrowExceptionWhenEmailIsNull() {
     Address address = new Address("Moscow", "Lenina", "111111");
-    assertThatThrownBy(() -> new Contact(null, "+78754673456", address))
+    assertThatThrownBy(() -> new Contact("Alex", null, "+78754673456", address))
         .isInstanceOf(IllegalArgumentException.class)
         .hasMessageContaining("Email");
   }
@@ -41,7 +41,7 @@ class ContactTest {
   @Test
   void shouldThrowExceptionWhenPhoneIsNull() {
     Address address = new Address("Moscow", "Lenina", "111111");
-    assertThatThrownBy(() -> new Contact("alex@gmail.com", null, address))
+    assertThatThrownBy(() -> new Contact("Alex", "alex@gmail.com", null, address))
         .isInstanceOf(IllegalArgumentException.class)
         .hasMessageContaining("Phone");
   }
@@ -49,7 +49,7 @@ class ContactTest {
   @Test
   void shouldThrowExceptionWhenEmailIsBlank() {
     Address address = new Address("Moscow", "Lenina", "111111");
-    assertThatThrownBy(() -> new Contact("   ", "+78754673456", address))
+    assertThatThrownBy(() -> new Contact("Alex", "   ", "+78754673456", address))
         .isInstanceOf(IllegalArgumentException.class)
         .hasMessageContaining("Email");
   }
@@ -57,8 +57,24 @@ class ContactTest {
   @Test
   void shouldThrowExceptionWhenPhoneIsBlank() {
     Address address = new Address("Moscow", "Lenina", "111111");
-    assertThatThrownBy(() -> new Contact("alex@gmail.com", "   ", address))
+    assertThatThrownBy(() -> new Contact("Alex", "alex@gmail.com", "   ", address))
         .isInstanceOf(IllegalArgumentException.class)
         .hasMessageContaining("Phone");
+  }
+
+  @Test
+  void shouldThrowExceptionWhenNameIsNull() {
+    Address address = new Address("Moscow", "Lenina", "111111");
+    assertThatThrownBy(() -> new Contact(null, "alex@gmail.com", "+78754673456", address))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessageContaining("Name");
+  }
+
+  @Test
+  void shouldThrowExceptionWhenNameIsBlank() {
+    Address address = new Address("Moscow", "Lenina", "111111");
+    assertThatThrownBy(() -> new Contact("   ", "alex@gmail.com", "+78754673456", address))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessageContaining("Name");
   }
 }
