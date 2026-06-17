@@ -29,10 +29,11 @@ class LeadServiceTest {
   @Test
   void shouldCreateLeadWhenEmailIsUnique() {
     Address address = new Address("Moscow", "Izmailovskaya", "123456");
-    Lead result = service.addLead("test@example.com", "+79161234567",
+    Lead result = service.addLead("Test User", "test@example.com", "+79161234567",
         address, "Test Company", LeadStatus.NEW);
 
     assertThat(result).isNotNull();
+    assertThat(result.contact().name()).isEqualTo("Test User");
     assertThat(result.contact().email()).isEqualTo("test@example.com");
     assertThat(result.contact().phone()).isEqualTo("+79161234567");
     assertThat(result.company()).isEqualTo("Test Company");
@@ -43,11 +44,11 @@ class LeadServiceTest {
   @Test
   void shouldThrowExceptionWhenEmailAlreadyExists() {
     Address address = new Address("Moscow", "Izmailovskaya", "123456");
-    service.addLead("duplicate@example.com", "+79161234567",
+    service.addLead("User", "duplicate@example.com", "+79161234567",
         address, "First Company", LeadStatus.NEW);
 
     assertThatThrownBy(() ->
-        service.addLead("duplicate@example.com", "+79169876543",
+        service.addLead("User", "duplicate@example.com", "+79169876543",
             address, "Second Company", LeadStatus.NEW)
     )
         .isInstanceOf(IllegalStateException.class)
@@ -57,9 +58,9 @@ class LeadServiceTest {
   @Test
   void shouldFindAllLeads() {
     Address address = new Address("Moscow", "Izmailovskaya", "123456");
-    service.addLead("one@example.com", "+79161111111",
+    service.addLead("User", "one@example.com", "+79161111111",
         address, "Company 1", LeadStatus.NEW);
-    service.addLead("two@example.com", "+79162222222",
+    service.addLead("User", "two@example.com", "+79162222222",
         address, "Company 2", LeadStatus.CONTACTED);
 
     List<Lead> result = service.findAll();
@@ -70,7 +71,7 @@ class LeadServiceTest {
   @Test
   void shouldFindLeadById() {
     Address address = new Address("Moscow", "Izmailovskaya", "123456");
-    Lead created = service.addLead("find@example.com", "+79161234567",
+    Lead created = service.addLead("User", "find@example.com", "+79161234567",
         address, "Company", LeadStatus.NEW);
 
     Optional<Lead> result = service.findById(created.id());
@@ -82,7 +83,7 @@ class LeadServiceTest {
   @Test
   void shouldFindLeadByEmail() {
     Address address = new Address("Moscow", "Izmailovskaya", "123456");
-    service.addLead("search@example.com", "+79161234567",
+    service.addLead("User", "search@example.com", "+79161234567",
         address, "Company", LeadStatus.NEW);
 
     Optional<Lead> result = service.findByEmail("search@example.com");
@@ -102,11 +103,11 @@ class LeadServiceTest {
   void shouldCreateLeadWithDifferentStatuses() {
     Address address = new Address("Moscow", "Izmailovskaya", "123456");
 
-    Lead newLead = service.addLead("new@example.com", "+79161111111",
+    Lead newLead = service.addLead("User", "new@example.com", "+79161111111",
         address, "Company", LeadStatus.NEW);
-    Lead qualifiedLead = service.addLead("qualified@example.com", "+79162222222",
+    Lead qualifiedLead = service.addLead("User", "qualified@example.com", "+79162222222",
         address, "Company", LeadStatus.CONTACTED);
-    Lead convertedLead = service.addLead("converted@example.com", "+79163333333",
+    Lead convertedLead = service.addLead("User", "converted@example.com", "+79163333333",
         address, "Company", LeadStatus.QUALIFIED);
 
     assertThat(newLead.status()).isEqualTo(LeadStatus.NEW);
@@ -119,7 +120,7 @@ class LeadServiceTest {
     Address address = new Address("Moscow", "Izmailovskaya", "123456");
 
     assertThatThrownBy(() ->
-        service.addLead(null, "+79161234567", address, "Company", LeadStatus.NEW)
+        service.addLead("User", null, "+79161234567", address, "Company", LeadStatus.NEW)
     )
         .isInstanceOf(IllegalArgumentException.class)
         .hasMessageContaining("Email");
@@ -130,7 +131,7 @@ class LeadServiceTest {
     Address address = new Address("Moscow", "Izmailovskaya", "123456");
 
     assertThatThrownBy(() ->
-        service.addLead("test@example.com", "+79161234567",
+        service.addLead("User", "test@example.com", "+79161234567",
             address, null, LeadStatus.NEW)
     )
         .isInstanceOf(IllegalArgumentException.class)
@@ -140,7 +141,7 @@ class LeadServiceTest {
   @Test
   void shouldThrowExceptionWhenAddressIsNull() {
     assertThatThrownBy(() ->
-        service.addLead("test@example.com", "+79161234567",
+        service.addLead("User", "test@example.com", "+79161234567",
             null, "Company", LeadStatus.NEW)
     )
         .isInstanceOf(IllegalArgumentException.class)
@@ -163,16 +164,16 @@ class LeadServiceTest {
   void shouldFilterLeadsByStatus(String searchStatus, int expectedSize) {
     Address address = new Address("Moscow", "Test", "123456");
 
-    service.addLead("new1@test.com", "+79991111111", address, "Company", LeadStatus.NEW);
-    service.addLead("new2@test.com", "+79991111112", address, "Company", LeadStatus.NEW);
-    service.addLead("new3@test.com", "+79991111113", address, "Company", LeadStatus.NEW);
-    service.addLead("ct1@test.com", "+79991111114", address, "Company", LeadStatus.CONTACTED);
-    service.addLead("ct2@test.com", "+79991111115", address, "Company", LeadStatus.CONTACTED);
-    service.addLead("ct3@test.com", "+79991111116", address, "Company", LeadStatus.CONTACTED);
-    service.addLead("ct4@test.com", "+79991111117", address, "Company", LeadStatus.CONTACTED);
-    service.addLead("ct5@test.com", "+79991111118", address, "Company", LeadStatus.CONTACTED);
-    service.addLead("ql1@test.com", "+79991111119", address, "Company", LeadStatus.QUALIFIED);
-    service.addLead("ql2@test.com", "+79991111120", address, "Company", LeadStatus.QUALIFIED);
+    service.addLead("User", "new1@test.com", "+79991111111", address, "Company", LeadStatus.NEW);
+    service.addLead("User", "new2@test.com", "+79991111112", address, "Company", LeadStatus.NEW);
+    service.addLead("User", "new3@test.com", "+79991111113", address, "Company", LeadStatus.NEW);
+    service.addLead("User", "ct1@test.com", "+79991111114", address, "Company", LeadStatus.CONTACTED);
+    service.addLead("User", "ct2@test.com", "+79991111115", address, "Company", LeadStatus.CONTACTED);
+    service.addLead("User", "ct3@test.com", "+79991111116", address, "Company", LeadStatus.CONTACTED);
+    service.addLead("User", "ct4@test.com", "+79991111117", address, "Company", LeadStatus.CONTACTED);
+    service.addLead("User", "ct5@test.com", "+79991111118", address, "Company", LeadStatus.CONTACTED);
+    service.addLead("User", "ql1@test.com", "+79991111119", address, "Company", LeadStatus.QUALIFIED);
+    service.addLead("User", "ql2@test.com", "+79991111120", address, "Company", LeadStatus.QUALIFIED);
 
     LeadStatus search = LeadStatus.valueOf(searchStatus);
     List<Lead> result = service.findByStatus(search);
@@ -185,8 +186,8 @@ class LeadServiceTest {
   void shouldReturnEmptyListWhenNoLeadsWithStatus() {
     Address address = new Address("Moscow", "Test", "123456");
 
-    service.addLead("new1@test.com", "+79991111111", address, "Company", LeadStatus.NEW);
-    service.addLead("new2@test.com", "+79991111112", address, "Company", LeadStatus.CONTACTED);
+    service.addLead("User", "new1@test.com", "+79991111111", address, "Company", LeadStatus.NEW);
+    service.addLead("User", "new2@test.com", "+79991111112", address, "Company", LeadStatus.CONTACTED);
 
     List<Lead> result = service.findByStatus(LeadStatus.QUALIFIED);
 

@@ -1,9 +1,5 @@
 package ru.mentee.power.crm.spring.service;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-
 import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +9,10 @@ import ru.mentee.power.crm.domain.Contact;
 import ru.mentee.power.crm.domain.Lead;
 import ru.mentee.power.crm.domain.LeadStatus;
 import ru.mentee.power.crm.spring.repository.LeadRepository;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class LeadService {
@@ -29,15 +29,26 @@ public class LeadService {
     LOG.info("LeadService @PostConstruct init() called — Bean lifecycle phase");
   }
 
-  public Lead addLead(String email, String phone, Address address,
+  public Lead addLead(String name, String email, String phone, Address address,
       String company, LeadStatus status) {
     if (repository.findByEmail(email).isPresent()) {
       throw new IllegalStateException("Lead with email already exists: " + email);
     }
 
-    Contact contact = new Contact(email, phone, address);
+    Contact contact = new Contact(name, email, phone, address);
     Lead lead = new Lead(UUID.randomUUID(), contact, company, status);
     return repository.save(lead);
+  }
+
+  public Lead updateLead(UUID id, String name, String email, String phone, Address address,
+                         String company, LeadStatus status) {
+    if (repository.findById(id).isPresent()) {
+      Contact contact = new Contact(name, email, phone, address);
+      Lead lead = new Lead(id, contact, company, status);
+      return repository.save(lead);
+    } else {
+      throw new IllegalArgumentException("Lead with id " + id + " not found");
+    }
   }
 
   public List<Lead> findAll() {

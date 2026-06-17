@@ -1,7 +1,10 @@
 package ru.mentee.power.crm.domain;
 
-public record Contact(String email, String phone, Address address) {
+public record Contact(String name, String email, String phone, Address address) {
   public Contact {
+    if (name == null || name.isBlank()) {
+      throw new IllegalArgumentException("Name не должен быть пустой или null");
+    }
     if (email == null || email.isBlank()) {
       throw new IllegalArgumentException("Email не должен быть пустой или null");
     }

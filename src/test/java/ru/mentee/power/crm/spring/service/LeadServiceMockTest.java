@@ -45,18 +45,19 @@ public class LeadServiceMockTest {
         .thenAnswer(invocation -> invocation.getArgument(0));
 
     Address address = new Address("Moscow", "Eliseevskaya 15", "987465");
-    Lead result = service.addLead("new@example.com", "+79169876453",
+    Lead result = service.addLead("Test User", "new@example.com", "+79169876453",
         address, "Company", LeadStatus.NEW);
 
     verify(mockLeadRepository, times(1)).save(any(Lead.class));
 
+    assertThat(result.contact().name()).isEqualTo("Test User");
     assertThat(result.contact().email()).isEqualTo("new@example.com");
   }
 
   @Test
   void shouldNotCallSaveWhenEmailExists() {
     Address address = new Address("Moscow", "Eliseevskaya 15", "987465");
-    Contact contact = new Contact("test@gmail.com", "+79167654563245", address);
+    Contact contact = new Contact("Test User", "test@gmail.com", "+79167654563245", address);
     Lead expectedLead = new Lead(UUID.randomUUID(), contact, "TestCompany", LeadStatus.QUALIFIED);
 
     when(mockLeadRepository.findByEmail("test@gmail.com"))
@@ -65,7 +66,7 @@ public class LeadServiceMockTest {
     Address address2 = new Address("Voronesh", "Leningradskaya 10", "746283");
 
     assertThatThrownBy(() ->
-        service.addLead("test@gmail.com", "+79169854637", address2, "Test2Company", LeadStatus.NEW))
+        service.addLead("Test User", "test@gmail.com", "+79169854637", address2, "Test2Company", LeadStatus.NEW))
         .isInstanceOf(IllegalStateException.class);
 
     verify(mockLeadRepository, never()).save(any(Lead.class));
@@ -79,7 +80,7 @@ public class LeadServiceMockTest {
         .thenAnswer(invocation -> invocation.getArgument(0));
 
     Address address = new Address("Moscow", "Eliseevskaya 15", "987465");
-    service.addLead("new@example.com", "+79169876453", address, "Company", LeadStatus.NEW);
+    service.addLead("Test User", "new@example.com", "+79169876453", address, "Company", LeadStatus.NEW);
 
     var inOrder = inOrder(mockLeadRepository);
     inOrder.verify(mockLeadRepository).findByEmail("new@example.com");

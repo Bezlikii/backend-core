@@ -25,7 +25,7 @@ class LeadRepositoryTest {
   @Test
   void shouldSaveAndFindLeadByIdWhenLeadSaved() {
     UUID id = UUID.randomUUID();
-    Contact contact = new Contact("test@gmail.com", "+79167654382",
+    Contact contact = new Contact("Test User", "test@gmail.com", "+79167654382",
         new Address("Moscow", "Izmailovskaya", "123456"));
     Lead lead = new Lead(id, contact, "TestCompany", LeadStatus.NEW);
     repository.save(lead);
@@ -41,11 +41,11 @@ class LeadRepositoryTest {
   void shouldReturnAllLeadsWhenMultipleLeadsSaved() {
     Address address = new Address("Moscow", "Izmailovskaya", "123456");
     Lead lead1 = new Lead(UUID.randomUUID(),
-        new Contact("lead1@test.com", "+7001", address), "Company1", LeadStatus.NEW);
+        new Contact("User1", "lead1@test.com", "+7001", address), "Company1", LeadStatus.NEW);
     Lead lead2 = new Lead(UUID.randomUUID(),
-        new Contact("lead2@test.com", "+7002", address), "Company2", LeadStatus.NEW);
+        new Contact("User2", "lead2@test.com", "+7002", address), "Company2", LeadStatus.NEW);
     Lead lead3 = new Lead(UUID.randomUUID(),
-        new Contact("lead3@test.com", "+7003", address), "Company3", LeadStatus.NEW);
+        new Contact("User3", "lead3@test.com", "+7003", address), "Company3", LeadStatus.NEW);
     repository.save(lead1);
     repository.save(lead2);
     repository.save(lead3);
@@ -55,7 +55,7 @@ class LeadRepositoryTest {
   @Test
   void shouldDeleteLeadWhenLeadExists() {
     UUID id = UUID.randomUUID();
-    Contact contact = new Contact("test@gmail.com", "+79167654382",
+    Contact contact = new Contact("Test User", "test@gmail.com", "+79167654382",
         new Address("Moscow", "Izmailovskaya", "123456"));
     Lead lead = new Lead(id, contact, "TestCompany", LeadStatus.NEW);
     repository.save(lead);
@@ -68,9 +68,9 @@ class LeadRepositoryTest {
   void shouldOverwriteLeadWhenSaveWithSameId() {
     UUID id = UUID.randomUUID();
     Address address = new Address("Moscow", "Izmailovskaya", "123456");
-    Lead lead1 = new Lead(id, new Contact("test1@gmail.com", "+7001", address),
+    Lead lead1 = new Lead(id, new Contact("User1", "test1@gmail.com", "+7001", address),
         "Company1", LeadStatus.NEW);
-    Lead lead2 = new Lead(id, new Contact("test2@gmail.com", "+7002", address),
+    Lead lead2 = new Lead(id, new Contact("User2", "test2@gmail.com", "+7002", address),
         "Company2", LeadStatus.CONTACTED);
     repository.save(lead1);
     repository.save(lead2);
@@ -86,6 +86,7 @@ class LeadRepositoryTest {
     for (int i = 0; i < 1000; i++) {
       UUID id = UUID.randomUUID();
       Contact contact = new Contact(
+          "User" + i,
           "email" + i + "@test.com",
           "+7" + i,
           new Address("City" + i, "Street" + i, "ZIP" + i)
@@ -121,7 +122,7 @@ class LeadRepositoryTest {
 
   @Test
   void shouldSaveBothLeadsEvenWithSameEmailAndPhone() {
-    Contact sharedContact = new Contact("ivan@mail.ru", "+79001234567",
+    Contact sharedContact = new Contact("Ivan", "ivan@mail.ru", "+79001234567",
         new Address("Moscow", "Tverskaya 1", "101000"));
     Lead originalLead = new Lead(UUID.randomUUID(), sharedContact, "Acme Corp", LeadStatus.NEW);
     Lead duplicateLead = new Lead(
@@ -137,7 +138,7 @@ class LeadRepositoryTest {
   void shouldFindByEmailWhenEmailExists() {
     Address address = new Address("Moscow", "Izmailovskaya", "123456");
     Lead lead = new Lead(UUID.randomUUID(),
-        new Contact("test@gmail.com", "+79167654382", address), "TestCompany", LeadStatus.NEW);
+        new Contact("Test User", "test@gmail.com", "+79167654382", address), "TestCompany", LeadStatus.NEW);
     repository.save(lead);
 
     Optional<Lead> result = repository.findByEmail("test@gmail.com");
@@ -150,7 +151,7 @@ class LeadRepositoryTest {
   void shouldReturnEmptyWhenFindByEmailWithNonExistentEmail() {
     Address address = new Address("Moscow", "Izmailovskaya", "123456");
     Lead lead = new Lead(UUID.randomUUID(),
-        new Contact("test@gmail.com", "+79167654382", address), "TestCompany", LeadStatus.NEW);
+        new Contact("Test User", "test@gmail.com", "+79167654382", address), "TestCompany", LeadStatus.NEW);
     repository.save(lead);
 
     Optional<Lead> result = repository.findByEmail("nonexistent@gmail.com");
@@ -162,7 +163,7 @@ class LeadRepositoryTest {
   void shouldDeleteAndUpdateEmailIndex() {
     Address address = new Address("Moscow", "Izmailovskaya", "123456");
     Lead lead = new Lead(UUID.randomUUID(),
-        new Contact("test@gmail.com", "+79167654382", address), "TestCompany", LeadStatus.NEW);
+        new Contact("Test User", "test@gmail.com", "+79167654382", address), "TestCompany", LeadStatus.NEW);
     repository.save(lead);
 
     repository.delete(lead.id());
@@ -175,7 +176,7 @@ class LeadRepositoryTest {
   void shouldReturnDefensiveCopy() {
     Address address = new Address("Moscow", "Izmailovskaya", "123456");
     Lead lead = new Lead(UUID.randomUUID(),
-        new Contact("test@gmail.com", "+79167654382", address), "TestCompany", LeadStatus.NEW);
+        new Contact("Test User", "test@gmail.com", "+79167654382", address), "TestCompany", LeadStatus.NEW);
     repository.save(lead);
 
     List<Lead> result = repository.findAll();
@@ -188,7 +189,7 @@ class LeadRepositoryTest {
   void shouldHandleNullEmailInFindByEmail() {
     Address address = new Address("Moscow", "Izmailovskaya", "123456");
     Lead lead = new Lead(UUID.randomUUID(),
-        new Contact("test@gmail.com", "+79167654382", address), "TestCompany", LeadStatus.NEW);
+        new Contact("Test User", "test@gmail.com", "+79167654382", address), "TestCompany", LeadStatus.NEW);
     repository.save(lead);
 
     Optional<Lead> result = repository.findByEmail(null);

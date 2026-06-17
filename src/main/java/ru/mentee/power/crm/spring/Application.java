@@ -18,16 +18,18 @@ public class Application {
   CommandLineRunner initData(LeadService leadService) {
     return args -> {
       Address addr = new Address("Moscow", "Tverskaya", "125009");
-      leadService.addLead("ivan@example.com", "+7-900-111-22-33", addr,
+      leadService.addLead("Ivan", "ivan@example.com", "+7-900-111-22-33", addr,
           "TechCorp", LeadStatus.NEW);
-      leadService.addLead("maria@example.com", "+7-900-222-33-44", addr,
+      leadService.addLead("Maria", "maria@example.com", "+7-900-222-33-44", addr,
           "DesignStudio", LeadStatus.CONTACTED);
-      leadService.addLead("alex@example.com", "+7-900-333-44-55", addr,
+      leadService.addLead("Alex", "alex@example.com", "+7-900-333-44-55", addr,
           "DataFlow", LeadStatus.NEW);
-      leadService.addLead("elena@example.com", "+7-900-444-55-66", addr,
+      leadService.addLead("Elena", "elena@example.com", "+7-900-444-55-66", addr,
           "CloudNet", LeadStatus.QUALIFIED);
-      leadService.addLead("dmitry@example.com", "+7-900-555-66-77", addr,
+      leadService.addLead("Dmitry","dmitry@example.com", "+7-900-555-66-77", addr,
           "WebSoft", LeadStatus.CONTACTED);
+      leadService.addLead("Anton", "anton@example.com", "+7-900-666-77-88", addr,
+          "AppleStudio", LeadStatus.LOST);
     };
   }
 }
