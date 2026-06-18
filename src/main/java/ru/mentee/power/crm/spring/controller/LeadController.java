@@ -73,4 +73,10 @@ public class LeadController {
     leadService.updateLead(id, dto.name(), dto.email(), dto.phone(), address, dto.company(), dto.status());
     return "redirect:/leads";
   }
+
+  @PostMapping("/leads/{id}/delete")
+  public String deleteLead(@PathVariable UUID id) {
+    leadService.delete(id);
+    return "redirect:/leads";
+  }
 }

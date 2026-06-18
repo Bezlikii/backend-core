@@ -3,7 +3,9 @@ package ru.mentee.power.crm.spring.service;
 import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 import ru.mentee.power.crm.domain.Address;
 import ru.mentee.power.crm.domain.Contact;
 import ru.mentee.power.crm.domain.Lead;
@@ -47,7 +49,7 @@ public class LeadService {
       Lead lead = new Lead(id, contact, company, status);
       return repository.save(lead);
     } else {
-      throw new IllegalArgumentException("Lead with id " + id + " not found");
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Lead with id " + id + " not found");
     }
   }
 
@@ -67,5 +69,10 @@ public class LeadService {
 
   public Optional<Lead> findByEmail(String email) {
     return repository.findByEmail(email);
+  }
+
+  public void delete(UUID id) {
+    repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Lead with id " + id + " not found"));
+    repository.delete(id);
   }
 }
