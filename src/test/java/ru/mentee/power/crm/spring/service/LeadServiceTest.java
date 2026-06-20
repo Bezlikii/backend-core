@@ -193,4 +193,98 @@ class LeadServiceTest {
 
     assertThat(result).hasSize(0);
   }
+
+  @Test
+  void shouldFindLeadsBySearchInName() {
+    Address address = new Address("Moscow", "Test", "123456");
+    service.addLead("Ivan Petrov", "ivan@example.com", "+79991111111", address, "Company", LeadStatus.NEW);
+    service.addLead("John Smith", "john@example.com", "+79992222222", address, "Company", LeadStatus.NEW);
+
+    List<Lead> result = service.findLeads("ivan", null);
+
+    assertThat(result).hasSize(1);
+    assertThat(result.get(0).contact().name()).isEqualTo("Ivan Petrov");
+  }
+
+  @Test
+  void shouldFindLeadsBySearchInEmail() {
+    Address address = new Address("Moscow", "Test", "123456");
+    service.addLead("User One", "ivan@example.com", "+79991111111", address, "Company", LeadStatus.NEW);
+    service.addLead("User Two", "john@example.com", "+79992222222", address, "Company", LeadStatus.NEW);
+
+    List<Lead> result = service.findLeads("ivan@", null);
+
+    assertThat(result).hasSize(1);
+    assertThat(result.get(0).contact().email()).isEqualTo("ivan@example.com");
+  }
+
+  @Test
+  void shouldFindLeadsBySearchCaseInsensitive() {
+    Address address = new Address("Moscow", "Test", "123456");
+    service.addLead("Ivan Petrov", "ivan@example.com", "+79991111111", address, "Company", LeadStatus.NEW);
+    service.addLead("John Smith", "john@example.com", "+79992222222", address, "Company", LeadStatus.NEW);
+
+    List<Lead> result = service.findLeads("IVAN", null);
+
+    assertThat(result).hasSize(1);
+    assertThat(result.get(0).contact().name()).isEqualTo("Ivan Petrov");
+  }
+
+  @Test
+  void shouldFindLeadsByStatus() {
+    Address address = new Address("Moscow", "Test", "123456");
+    service.addLead("User One", "one@example.com", "+79991111111", address, "Company", LeadStatus.NEW);
+    service.addLead("User Two", "two@example.com", "+79992222222", address, "Company", LeadStatus.CONTACTED);
+
+    List<Lead> result = service.findLeads(null, "NEW");
+
+    assertThat(result).hasSize(1);
+    assertThat(result.get(0).status()).isEqualTo(LeadStatus.NEW);
+  }
+
+  @Test
+  void shouldFindLeadsWithCombinedFilters() {
+    Address address = new Address("Moscow", "Test", "123456");
+    service.addLead("Ivan New", "ivan.new@example.com", "+79991111111", address, "Company", LeadStatus.NEW);
+    service.addLead("Ivan Contacted", "ivan.contacted@example.com", "+79992222222", address, "Company", LeadStatus.CONTACTED);
+    service.addLead("John New", "john.new@example.com", "+79993333333", address, "Company", LeadStatus.NEW);
+
+    List<Lead> result = service.findLeads("ivan", "NEW");
+
+    assertThat(result).hasSize(1);
+    assertThat(result.get(0).contact().name()).isEqualTo("Ivan New");
+    assertThat(result.get(0).status()).isEqualTo(LeadStatus.NEW);
+  }
+
+  @Test
+  void shouldReturnAllLeadsWhenNoFilters() {
+    Address address = new Address("Moscow", "Test", "123456");
+    service.addLead("User One", "one@example.com", "+79991111111", address, "Company", LeadStatus.NEW);
+    service.addLead("User Two", "two@example.com", "+79992222222", address, "Company", LeadStatus.CONTACTED);
+
+    List<Lead> result = service.findLeads(null, null);
+
+    assertThat(result).hasSize(2);
+  }
+
+  @Test
+  void shouldReturnAllLeadsWhenEmptyFilters() {
+    Address address = new Address("Moscow", "Test", "123456");
+    service.addLead("User One", "one@example.com", "+79991111111", address, "Company", LeadStatus.NEW);
+    service.addLead("User Two", "two@example.com", "+79992222222", address, "Company", LeadStatus.CONTACTED);
+
+    List<Lead> result = service.findLeads("", "");
+
+    assertThat(result).hasSize(2);
+  }
+
+  @Test
+  void shouldReturnEmptyListWhenNoMatchesForSearch() {
+    Address address = new Address("Moscow", "Test", "123456");
+    service.addLead("User One", "one@example.com", "+79991111111", address, "Company", LeadStatus.NEW);
+
+    List<Lead> result = service.findLeads("nonexistent", null);
+
+    assertThat(result).isEmpty();
+  }
 }

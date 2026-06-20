@@ -123,20 +123,19 @@
           </select>
         </div>
 
-        <div class="flex items-center justify-between">
-          <button
-            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            type="submit"
-          >
-            Сохранить изменения
-          </button>
-          <a
-            class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
-            href="/leads"
-          >
-            Отмена
-          </a>
-        </div>
+        <button
+          type="submit"
+          class="w-full bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:ring-2 focus:ring-blue-500 mt-6"
+        >
+          Сохранить изменения
+        </button>
+
+        <a
+          href="/leads"
+          class="block text-center text-sm text-gray-600 hover:text-gray-900 mt-2"
+        >
+          Отмена
+        </a>
       </form>
     </div>
   `
