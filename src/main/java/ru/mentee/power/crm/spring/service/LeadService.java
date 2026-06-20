@@ -1,5 +1,10 @@
 package ru.mentee.power.crm.spring.service;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+import java.util.stream.Stream;
+
 import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,10 +16,6 @@ import ru.mentee.power.crm.domain.Contact;
 import ru.mentee.power.crm.domain.Lead;
 import ru.mentee.power.crm.domain.LeadStatus;
 import ru.mentee.power.crm.spring.repository.LeadRepository;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class LeadService {
@@ -72,7 +73,27 @@ public class LeadService {
   }
 
   public void delete(UUID id) {
-    repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Lead with id " + id + " not found"));
+    repository.findById(id)
+        .orElseThrow(() -> new ResponseStatusException(
+            HttpStatus.NOT_FOUND, "Lead with id " + id + " not found"));
     repository.delete(id);
+  }
+
+  public List<Lead> findLeads(String search, String status) {
+    Stream<Lead> stream = repository.findAll().stream();
+
+    if (search != null && !search.isEmpty()) {
+      stream = stream.filter(lead ->
+          lead.contact().name().toLowerCase().contains(search.toLowerCase())
+              || lead.contact().email().toLowerCase().contains(search.toLowerCase())
+      );
+    }
+
+    if (status != null && !status.isEmpty()) {
+      stream = stream.filter(lead ->
+          lead.status().equals(LeadStatus.valueOf(status))
+      );
+    }
+    return stream.toList();
   }
 }
