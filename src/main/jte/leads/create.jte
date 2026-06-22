@@ -115,7 +115,7 @@
             <option value="NEW">NEW</option>
             <option value="CONTACTED">CONTACTED</option>
             <option value="QUALIFIED">QUALIFIED</option>
-            <option value="QUALIFIED">LOST</option>
+            <option value="LOST">LOST</option>
           </select>
         </div>
 

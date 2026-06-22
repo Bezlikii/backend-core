@@ -1,10 +1,5 @@
 package ru.mentee.power.crm.spring.service;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-import java.util.stream.Stream;
-
 import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +12,11 @@ import ru.mentee.power.crm.domain.Lead;
 import ru.mentee.power.crm.domain.LeadStatus;
 import ru.mentee.power.crm.spring.repository.LeadRepository;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+import java.util.stream.Stream;
+
 @Service
 public class LeadService {
   private static final Logger LOG = LoggerFactory.getLogger(LeadService.class);
@@ -24,7 +24,7 @@ public class LeadService {
 
   public LeadService(LeadRepository repository) {
     this.repository = repository;
-    LOG.info("Lead constructor called");
+    LOG.info("LeadService constructor called");
   }
 
   @PostConstruct

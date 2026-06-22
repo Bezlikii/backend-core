@@ -116,10 +116,26 @@
             name="status"
             required
           >
-            <option value="NEW" selected="${lead.status().name().equals("NEW")}">NEW</option>
-            <option value="CONTACTED" selected="${lead.status().name().equals("CONTACTED")}">CONTACTED</option>
-            <option value="QUALIFIED" selected="${lead.status().name().equals("QUALIFIED")}">QUALIFIED</option>
-            <option value="LOST" selected="${lead.status().name().equals("LOST")}">LOST</option>
+            @if(lead.status().name().equals("NEW"))
+              <option value="NEW" selected>NEW</option>
+            @else
+              <option value="NEW">NEW</option>
+            @endif
+            @if(lead.status().name().equals("CONTACTED"))
+              <option value="CONTACTED" selected>CONTACTED</option>
+            @else
+              <option value="CONTACTED">CONTACTED</option>
+            @endif
+            @if(lead.status().name().equals("QUALIFIED"))
+              <option value="QUALIFIED" selected>QUALIFIED</option>
+            @else
+              <option value="QUALIFIED">QUALIFIED</option>
+            @endif
+            @if(lead.status().name().equals("LOST"))
+              <option value="LOST" selected>LOST</option>
+            @else
+              <option value="LOST">LOST</option>
+            @endif
           </select>
         </div>
 
